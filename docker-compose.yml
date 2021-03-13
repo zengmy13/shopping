@@ -8,5 +8,5 @@ services:
   shopping-frontend:
     build: ./shopping-frontend
     ports:
-      - "3000:3000"
+      - "80:3000"
     container_name: shopping-frontend
