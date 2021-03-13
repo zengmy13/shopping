@@ -1,0 +1,39 @@
+.main.container {
+    min-height: 80vh;
+}
+
+body a {
+    color: #212529;
+}
+
+.carousel-item img {
+    height: 300px;
+    border-radius: 50%;
+    padding: 40px;
+
+}
+
+.carousel-inner {
+    text-align: center;
+}
+
+.carousel-caption {
+    position: absolute;
+    top: 0
+}
+
+.page-item a.page-link:hover {
+    color: black
+}
+
+.page-item.active span.page-link {
+    background-color: black;
+    border: 1px solid black
+}
+
+a.page-link {
+    color: black
+}
+
+
+

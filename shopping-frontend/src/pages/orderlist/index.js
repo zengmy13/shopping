@@ -1,0 +1,81 @@
+import React, {useEffect} from 'react';
+import {Button, Table, Container, Alert} from "react-bootstrap";
+import Loadingpage from "../loading";
+import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {admingetallorders} from "./store/actioncreators";
+
+
+export default function Orderlist(props) {
+    const dispatch = useDispatch();
+    const {allorders, allordersloading, allorderserror} = useSelector(state => state.allorders);
+    const {currentuser} = useSelector(state => state.login);
+
+    useEffect(() => {
+        if (currentuser && currentuser?.isAdmin) {
+            dispatch(admingetallorders())
+        } else {
+            props.history.push("/login")
+        }
+    }, [dispatch, props.history, currentuser])
+    return (
+        <Container>
+            <h4 className='mb-4'>ORDERS</h4>
+            <Table striped bordered hover style={{fontSize: ".9rem"}} responsive>
+                <thead>
+                <tr className='text-center'>
+                    <th>ID</th>
+                    <th>USER</th>
+                    <th>DATE</th>
+                    <th>TOTAL</th>
+                    <th>PAID</th>
+                    <th>DELIVERED</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody className='text-center'>
+                {
+                    allordersloading
+                        ? <tr>
+                            <td colSpan={7}>
+                                <Loadingpage/>
+                            </td>
+                        </tr>
+                        : allorderserror ?
+                        <tr>
+                            <td colSpan={7}>
+                                <Alert variant='danger'>{allorderserror}</Alert>
+                            </td>
+                        </tr>
+                        : allorders.length == 0 ? <tr>
+                                <td colSpan={7}>
+                                    NO ORDERS
+                                </td>
+                             </tr> :
+                            allorders.map((order, index) => {
+                                return <tr key={order._id}>
+                                    <td>{order._id}</td>
+                                    <td>{order.user?.name}</td>
+                                    <td>
+                                        {order.createdAt.substr(0, 10)}
+                                    </td>
+                                    <td>${order.totalprice
+                                    }</td>
+                                    <td>{order.ispaid ? order.paidat.substr(0, 10) :
+                                        <i className='fas fa-times' style={{color: "red"}}></i>}</td>
+                                    <td>{order.deliver ? order.deliverat.substr(0, 10)
+                                        : <i className='fas fa-times' style={{color: "red"}}></i>}
+                                    </td>
+                                    <td>
+                                        <Button className='btn btn-light' as={Link} to={`/order/${order._id}`}>
+                                            Details
+                                        </Button>
+                                    </td>
+                                </tr>
+                            })
+                }
+                </tbody>
+            </Table>
+        </Container>
+    )
+}
