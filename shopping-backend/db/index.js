@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const connectdb = async () => {
+const connectDB = async () => {
     try {
         const result = await mongoose.connect('mongodb+srv://mengmeng:1234' +
             '@cluster0.b7bzc.mongodb.net/project2back', {
@@ -15,5 +15,5 @@ const connectdb = async () => {
         console.log("database connect error")
     }
 }
-module.exports = connectdb;
+module.exports = connectDB;
 

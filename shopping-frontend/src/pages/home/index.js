@@ -2,10 +2,10 @@ import React, {useEffect} from 'react';
 import Product from "./product";
 import {Container, Row, Col, Alert} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {getproducts} from "./store/actioncreators";
-import Loadingpage from "../loading";
-import Helmetcomponent from "../../components/meta";
-import Productcarousel from "../../components/carousel";
+import {getProducts} from "./store/actioncreators";
+import LoadingPage from "../loading";
+import HelmetComponent from "../../components/meta";
+import ProductCarousel from "../../components/carousel";
 import Paginate from "../../components/paginate";
 
 
@@ -13,19 +13,19 @@ export default function Home(props) {
     const dispatch = useDispatch();
     const keyword = props.match.params.key
     const page = props.match.params.page;
-    const {products, productsloading, productserror, totalpage, pagenum} = useSelector(state => state.home);
+    const {products, productsLoading, productsError, totalPage, pageNum} = useSelector(state => state.home);
 
     useEffect(() => {
-        dispatch(getproducts(keyword, page))
+        dispatch(getProducts(keyword, page))
     }, [dispatch, keyword, page])
     return (
         <>
-            <Helmetcomponent title='Welcome to my project'/>
-            {keyword ? null : <Productcarousel/>}
+            <HelmetComponent title='Welcome to my project'/>
+            {keyword ? null : <ProductCarousel/>}
             <Container>
                 <Row>
-                    {productsloading ? <Loadingpage/> : productserror ?
-                        <Alert variant='danger' style={{margin: "100px auto"}}>{productserror}</Alert> :
+                    {productsLoading ? <LoadingPage/> : productsError ?
+                        <Alert variant='danger' style={{margin: "100px auto"}}>{productsError}</Alert> :
                         products.map((product, index) => {
                             return <Col md={6} sm={12} lg={4} xl={3} key={product._id}>
                                 <Product product={product}/>
@@ -34,7 +34,7 @@ export default function Home(props) {
 
                     }
                 </Row>
-                {!productserror && <Paginate totalpage={totalpage} page={pagenum} keyword={keyword}/>}
+                {!productsError && <Paginate totalPage={totalPage} page={pageNum} keyword={keyword}/>}
             </Container>
         </>
     )

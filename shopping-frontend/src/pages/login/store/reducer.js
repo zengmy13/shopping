@@ -12,138 +12,138 @@ import {
 } from "./actiontype";
 
 
-const getuserfromlocal = window.localStorage.getItem("userdata") ? JSON.parse(window.localStorage.getItem("userdata")) : null
-const defaultvalue = {
-    currentuser: getuserfromlocal,
-    loginloading: false,
-    loginerror: null,
-    registerloading: false,
-    registererror: null,
-    updateloading: false,
-    updateerror: null,
+const getUserFromLocal = window.localStorage.getItem("userdata") ? JSON.parse(window.localStorage.getItem("userdata")) : null
+const defaultValue = {
+    currentUser: getUserFromLocal,
+    loginLoading: false,
+    loginError: null,
+    registerLoading: false,
+    registerError: null,
+    updateLoading: false,
+    updateError: null,
     profile: null,
-    profileloading: false,
-    profileerror: null,
-    allorders: [],
-    allordersloading: false,
-    allorderserror: null
+    profileLoading: false,
+    profileError: null,
+    allOrders: [],
+    allOrdersLoading: false,
+    allOrdersError: null
 }
 
-export const loginreducer = (state = defaultvalue, action) => {
+export const loginReducer = (state = defaultValue, action) => {
 
     switch (action.type) {
         case LOGIN_REQUEST:
             return {
                 ...state,
-                loginloading: true
+                loginLoading: true
             }
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                loginloading: false,
-                currentuser: action.value,
+                loginLoading: false,
+                currentUser: action.value,
             }
         case LOGIN_FAIL:
             return {
                 ...state,
-                loginloading: false,
-                loginerror: action.error
+                loginLoading: false,
+                loginError: action.error
             }
         case LOG_OUT:
             return {
                 ...state,
-                currentuser: null
+                currentUser: null
             }
         case REGISTER_REQUEST:
             return {
                 ...state,
-                registerloading: true,
+                registerLoading: true,
             }
         case REGISTER_SUCCESS:
             return {
                 ...state,
-                registerloading: false,
-                currentuser: {
-                    ...state.currentuser,
+                registerLoading: false,
+                currentUser: {
+                    ...state.currentUser,
                     ...action.value
                 }
             }
         case REGISTER_FAIL:
             return {
                 ...state,
-                registererror: action.error,
-                registerloading: false
+                registerError: action.error,
+                registerLoading: false
             }
         case LOG_RESET:
             return {
                 ...state,
-                loginloading: false,
-                loginerror: null
+                loginLoading: false,
+                loginError: null
             }
         case REGISTER_RESET:
             return {
                 ...state,
-                registerloading: false,
-                registererror: null
+                registerLoading: false,
+                registerError: null
             }
         case UPDATE_PROFILE_REQUEST:
             return {
                 ...state,
-                updateloading: true
+                updateLoading: true
             }
         case UPDATE_PROFILE_SUCCESS:
             return {
                 ...state,
-                updateloading: false,
-                currentuser: action.value,
+                updateLoading: false,
+                currentUser: action.value,
                 profile: action.value,
             }
         case UPDATE_PROFILE_FAIL:
             return {
                 ...state,
-                updateloading: false,
-                updateerror: action.error
+                updateLoading: false,
+                updateError: action.error
             }
         case GET_PROFILE_REQUEST:
             return {
                 ...state,
-                profileloading: true
+                profileLoading: true
             }
         case GET_PROFILE_SUCCESS:
             return {
                 ...state,
-                profileloading: false,
+                profileLoading: false,
                 profile: action.value
             }
         case GET_PROFILE_FAIL:
             return {
                 ...state,
-                profileloading: false,
-                profileerror: action.error
+                profileLoading: false,
+                profileError: action.error
             }
         case PROFILE_RESET:
             return {
                 ...state,
                 profile: null,
-                profileloading: false,
-                profileerror: null,
+                profileLoading: false,
+                profileError: null,
             }
         case GET_ALL_ORDERS:
             return {
                 ...state,
-                allordersloading: true
+                allOrdersLoading: true
             }
         case GET_ALL_ORDERS_SUCCESS:
             return {
                 ...state,
-                allordersloading: false,
-                allorders: action.value
+                allOrdersLoading: false,
+                allOrders: action.value
             }
         case GET_ALL_ORDERS_FAIL:
             return {
                 ...state,
-                allordersloading: false,
-                allorderserror: action.error
+                allOrdersLoading: false,
+                allOrdersError: action.error
             }
     }
     return state;

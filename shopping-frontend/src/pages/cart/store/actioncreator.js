@@ -1,7 +1,7 @@
 import axios from "axios";
 import {ADDTOCARTITEM, REMOVECARTITEM} from "./actiontype";
 
-export const addtocart = (id, qty) => {
+export const addToCart = (id, qty) => {
     return async (dispatch, getState) => {
         try {
             const result = await axios.get(`/api/product/${id}`);
@@ -12,13 +12,13 @@ export const addtocart = (id, qty) => {
                     qty: qty
                 }
             })
-            window.localStorage.setItem("cartitems", JSON.stringify(getState().cart.cartitems))
+            window.localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems))
         } catch (error) {console.log(error)}
     }
 }
-export const removeitems = (id) => {
+export const removeItems = (id) => {
     return (dispatch, getState) => {
         dispatch({type: REMOVECARTITEM, id})
-        window.localStorage.setItem("cartitems", JSON.stringify(getState().cart.cartitems))
+        window.localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems))
     }
 }

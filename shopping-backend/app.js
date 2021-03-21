@@ -1,19 +1,19 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var connectdb = require('./db/index');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const connectDB = require('./db/index');
 
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var ordersRouter = require("./routes/orders")
-var uploadRouter = require("./routes/uploads")
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const ordersRouter = require("./routes/orders")
+const uploadRouter = require("./routes/uploads")
 
 
-var app = express();
+const app = express();
 
-connectdb()
+connectDB()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -32,14 +32,14 @@ app.use('/api/upload', uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    var error = new Error("not found");
+    const error = new Error("not found");
     res.status(404);
     next(error);
 });
 
 // error handler
 app.use(function (err, req, res, next) {
-    var statusCode = res.statusCode == 200 ? 500 : res.statusCode;
+    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
     res.status(statusCode);
     res.json({
         message: err.message,

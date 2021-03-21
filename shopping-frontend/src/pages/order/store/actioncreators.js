@@ -16,7 +16,7 @@ export const getorder = (id) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.get(`/api/orders/${id}`, config);
@@ -35,7 +35,7 @@ export const getorder = (id) => {
 }
 
 
-export const updatepaypal = (id, paymentresult) => {
+export const updatePaypal = (id, paymentresult) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -44,7 +44,7 @@ export const updatepaypal = (id, paymentresult) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.put(`/api/orders/${id}`, paymentresult, config);
@@ -63,7 +63,7 @@ export const updatepaypal = (id, paymentresult) => {
 }
 
 
-export const updatedeliver = (id) => {
+export const updateDeliver = (id) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -72,7 +72,7 @@ export const updatedeliver = (id) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             await axios.put(`/api/orders/${id}/deliver`, {}, config)

@@ -14,7 +14,7 @@ export const deleteproduct = (id) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
            await axios.delete(`/api/product/${id}`, config);

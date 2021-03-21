@@ -1,7 +1,7 @@
 import {SAVE_ADDRESS} from "./actiontype";
 
 
-export const saveaddress = (address) => {
+export const saveAddress = (address) => {
     return (dispatch) => {
         dispatch({
             type: SAVE_ADDRESS,

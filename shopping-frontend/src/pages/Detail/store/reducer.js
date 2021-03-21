@@ -10,76 +10,76 @@ import {
     GET_PRODUCT_SUCCESS
 } from "./actiontype";
 
-const defaultvalue = {
+const defaultValue = {
     product: null,
-    productloading: false,
-    producterror: null,
-    updateloading: false,
-    updateerror: null,
-    updatesuccess: false,
-    addreviewsuccess: false,
-    addreviewloading: false,
-    addreviewerror: null
+    productLoading: false,
+    productError: null,
+    updateLoading: false,
+    updateError: null,
+    updateSuccess: false,
+    addReviewSuccess: false,
+    addReviewLoading: false,
+    addReviewError: null
 }
 
-export const detailreducer = (state = defaultvalue, action) => {
+export const detailReducer = (state = defaultValue, action) => {
     switch (action.type) {
         case GET_PRODUCT_REQUEST:
             return {
                 ...state,
-                productloading: true
+                productLoading: true
             }
         case GET_PRODUCT_SUCCESS:
             return {
                 ...state,
                 product: action.value,
-                productloading: false,
+                productLoading: false,
             }
         case GET_PRODUCT_FAIL:
             return {
                 ...state,
-                productloading: false,
-                producterror: action.error
+                productLoading: false,
+                productError: action.error
             }
         case ADMIN_UPDATE_PRODUCT_REQUEST:
             return {
                 ...state,
-                updateloading: true
+                updateLoading: true
             }
         case ADMIN_UPDATE_PRODUCT_SUCCESS:
             return {
                 ...state,
-                updateloading: false,
-                updatesuccess: true
+                updateLoading: false,
+                updateSuccess: true
             }
         case ADMIN_UPDATE_PRODUCT_FAIL:
             return {
                 ...state,
-                updateloading: false,
-                updateerror: action.error,
+                updateLoading: false,
+                updateError: action.error,
             }
         case ADMIN_PRODUCT_RESET:
             return {
                 ...state,
                 product: null,
-                updatesuccess: false,
+                updateSuccess: false,
             }
         case ADD_REVIEWS_REQUEST:
             return {
                 ...state,
-                addreviewloading: true
+                addReviewLoading: true
             }
         case ADD_REVIEWS_SUCCESS:
             return {
                 ...state,
-                addreviewloading: false,
-                addreviewsuccess: true
+                addReviewLoading: false,
+                addReviewSuccess: true
             }
         case ADD_REVIEWS_FAIL:
             return {
                 ...state,
-                addreviewloading: false,
-                addreviewerror: action.error
+                addReviewLoading: false,
+                addReviewError: action.error
             }
     }
     return state;

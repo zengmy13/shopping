@@ -28,7 +28,7 @@ export const login = (email, password) => {
                 type: LOGIN_SUCCESS,
                 value: result.data
             })
-            window.localStorage.setItem("userdata", JSON.stringify(getState().login.currentuser))
+            window.localStorage.setItem("userdata", JSON.stringify(getState().login.currentUser))
 
         } catch (error) {
             dispatch({
@@ -51,7 +51,7 @@ export const logout = () => {
         dispatch({
             type: LOG_OUT
         })
-        window.localStorage.removeItem("cartitems");
+        window.localStorage.removeItem("cartItems");
         window.localStorage.removeItem("userdata");
     }
 }
@@ -72,7 +72,7 @@ export const register = (email, password, name) => {
                 type: REGISTER_SUCCESS,
                 value: result.data
             })
-            window.localStorage.setItem("userdata", JSON.stringify(getState().login.currentuser))
+            window.localStorage.setItem("userdata", JSON.stringify(getState().login.currentUser))
 
         } catch (error) {
             dispatch({
@@ -84,7 +84,7 @@ export const register = (email, password, name) => {
     }
 }
 
-export const updateprofile = ({name, email, password}) => {
+export const updateProfile = ({name, email, password}) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -93,7 +93,7 @@ export const updateprofile = ({name, email, password}) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.put(`/api/users/profile`, {
@@ -115,7 +115,7 @@ export const updateprofile = ({name, email, password}) => {
 }
 
 
-export const getprofile = (id) => {
+export const getProfile = (id) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -124,7 +124,7 @@ export const getprofile = (id) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.get(`/api/users/${id}`, config);
@@ -143,7 +143,7 @@ export const getprofile = (id) => {
 }
 
 
-export const getallorders = () => {
+export const getAllOrders = () => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -152,10 +152,10 @@ export const getallorders = () => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
-            const result = await axios.get(`/api/orders/allorders`, config);
+            const result = await axios.get(`/api/orders/allOrders`, config);
             dispatch({
                 type: GET_ALL_ORDERS_SUCCESS,
                 value: result.data

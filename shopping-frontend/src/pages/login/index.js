@@ -3,25 +3,25 @@ import {Container, Form, Button, Row, Col, Alert} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import {login} from "./store/actioncreators";
 import {useDispatch, useSelector} from "react-redux";
-import Loadingpage from "../loading";
+import LoadingPage from "../loading";
 import {LOG_RESET} from "./store/actiontype";
 
-export default function Signin(props) {
-    const [email, setemail] = useState("")
-    const [password, setpassword] = useState("")
+export default function SignIn(props) {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const dispatch = useDispatch();
-    const {currentuser, loginloading, loginerror} = useSelector(state => state.login);
+    const {currentUser, loginLoading, loginError} = useSelector(state => state.login);
     const redirect = props.location.search ? props.location.search.split("=")[1] : "/"
 
     useEffect(() => {
         dispatch({
             type: LOG_RESET
         })
-        if (currentuser) {
+        if (currentUser) {
             props.history.push(redirect)
         }
-    }, [currentuser, props.history, dispatch])
-    const handlesubmitform = () => {
+    }, [currentUser, props.history, dispatch])
+    const handleSubmitForm = () => {
         dispatch(login(email, password))
     }
 
@@ -32,10 +32,10 @@ export default function Signin(props) {
                     <Col md={6}>
                         <h2 className='py-4'>SIGN IN</h2>
                         {
-                            loginerror ? <Alert variant='danger'>{loginerror}</Alert> : null
+                            loginError ? <Alert variant='danger'>{loginError}</Alert> : null
                         }
                         {
-                            loginloading ? <Loadingpage/> : null
+                            loginLoading ? <LoadingPage/> : null
                         }
                         <Form>
                             <Form.Group>
@@ -43,7 +43,7 @@ export default function Signin(props) {
                                 <Form.Control placeholder='email'
                                               value={email}
                                               type='email'
-                                              onChange={(e) => setemail(e.target.value)}>
+                                              onChange={(e) => setEmail(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -51,13 +51,13 @@ export default function Signin(props) {
                                 <Form.Control placeholder='password'
                                               type='password'
                                               value={password}
-                                              onChange={(e) => setpassword(e.target.value)}>
+                                              onChange={(e) => setPassword(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
                                 <Button type='submit' variant='dark'
-                                        disabled={loginloading}
-                                        onClick={handlesubmitform}>
+                                        disabled={loginLoading}
+                                        onClick={handleSubmitForm}>
                                     SIGN IN
                                 </Button>
                             </Form.Group>

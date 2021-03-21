@@ -14,97 +14,97 @@ import {
 } from "./actiontype";
 
 
-const defaultvalue = {
-    allusers: [],
-    allusersloading: false,
-    alluserserror: null,
-    deletesuccess: false,
-    deleteloading: false,
-    deleteerror: null,
+const defaultValue = {
+    allUsers: [],
+    allUsersLoading: false,
+    allUsersError: null,
+    deleteSuccess: false,
+    deleteLoading: false,
+    deleteError: null,
     user: null,
-    userloading: false,
-    usererror: null,
-    updateloading: false,
-    updateerror: null,
-    updatesuccess: false,
+    userLoading: false,
+    userError: null,
+    updateLoading: false,
+    updateError: null,
+    updateSuccess: false,
 }
 
-export const alluserreducer = (state = defaultvalue, action) => {
+export const allUserReducer = (state = defaultValue, action) => {
     switch (action.type) {
         case ADMIN_ALL_USERS:
             return {
                 ...state,
-                allusersloading: true
+                allUsersLoading: true
             }
         case ADMIN_USERS_SUCCESS:
             return {
                 ...state,
-                allusersloading: false,
-                allusers: action.value,
+                allUsersLoading: false,
+                allUsers: action.value,
             }
         case ADMIN_USERS_FAIL:
             return {
                 ...state,
-                allusersloading: false,
-                alluserserror: action.error
+                allUsersLoading: false,
+                allUsersError: action.error
             }
         case DELETE_REQUEST:
             return {
                 ...state,
-                deleteloading: true
+                deleteLoading: true
             }
         case DELETE_USER:
             return {
                 ...state,
-                deleteloading: false,
-                deletesuccess: true,
+                deleteLoading: false,
+                deleteSuccess: true,
             }
         case DELETE_FAIL:
             return {
                 ...state,
-                deleteloading: false,
-                deleteerror: action.error
+                deleteLoading: false,
+                deleteError: action.error
             }
         case ADMIN_USER_DETAIL:
             return {
                 ...state,
-                userloading: true
+                userLoading: true
             }
         case ADMIN_USER_SUCCESS:
             return {
                 ...state,
-                userloading: false,
+                userLoading: false,
                 user: action.value
             }
         case ADMIN_USER_FAIL:
             return {
                 ...state,
-                userloading: false,
-                usererror: action.error
+                userLoading: false,
+                userError: action.error
             }
         case ADMIN_USER_RESET: {
             return {
                 ...state,
-                updatesuccess: false
+                updateSuccess: false
             }
         }
         case ADMIN_USER_UPDATE:
             return {
                 ...state,
-                updateloading: true
+                updateLoading: true
             }
         case ADMIN_USER_UPDATE_SUCCESS:
             return {
                 ...state,
-                updateloading: false,
+                updateLoading: false,
                 user: action.value,
-                updatesuccess: true
+                updateSuccess: true
             }
         case ADMIN_USER_UPDATE_FAIL:
             return {
                 ...state,
-                updateloading: false,
-                updateerror: action.error
+                updateLoading: false,
+                updateError: action.error
             }
     }
     return state;

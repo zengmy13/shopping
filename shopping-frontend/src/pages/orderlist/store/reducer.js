@@ -3,32 +3,32 @@ import {ADMIN_GET_ORDERS_FAIL,
 } from "./actiontype";
 
 
-const defaultvalue = {
-    allorders: [],
-    allordersloading: false,
-    allorderserror: null,
+const defaultValue = {
+    allOrders: [],
+    allOrdersLoading: false,
+    allOrdersError: null,
 
 }
 
-export const allordersreducer = (state = defaultvalue, action) => {
+export const allordersreducer = (state = defaultValue, action) => {
 
     switch (action.type) {
         case ADMIN_GET_ORDERS_REQUEST:
             return {
                 ...state,
-                allordersloading: true
+                allOrdersLoading: true
             }
         case ADMIN_GET_ORDERS_SUCCESS:
             return {
                 ...state,
-                allordersloading: false,
-                allorders: action.value,
+                allOrdersLoading: false,
+                allOrders: action.value,
             }
         case ADMIN_GET_ORDERS_FAIL:
             return {
                 ...state,
-                allorderserror: action.error,
-                allordersloading: false
+                allOrdersError: action.error,
+                allOrdersLoading: false
             }
     }
     return state;

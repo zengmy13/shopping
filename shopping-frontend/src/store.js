@@ -1,30 +1,30 @@
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from "redux-thunk";
-import {homereducer} from "./pages/home/store/reducer";
-import {detailreducer} from "./pages/Detail/store/reducer";
-import {cartreducer} from "./pages/cart/store/reducer";
-import {loginreducer} from "./pages/login/store/reducer";
-import {addressreducer} from "./pages/shipping/store/reducer";
+import {homeReducer} from "./pages/home/store/reducer";
+import {detailReducer} from "./pages/Detail/store/reducer";
+import {cartReducer} from "./pages/cart/store/reducer";
+import {loginReducer} from "./pages/login/store/reducer";
+import {addressReducer} from "./pages/shipping/store/reducer";
 import {paymentreducer} from "./pages/payment/store/reducer";
-import {orderreducer} from "./pages/placeorder/store/reducer";
-import {finalorderreducer} from "./pages/order/store/reducer";
-import {alluserreducer} from "./pages/userlist/store/reducer";
+import {orderReducer} from "./pages/placeorder/store/reducer";
+import {finalOrderReducer} from "./pages/order/store/reducer";
+import {allUserReducer} from "./pages/userlist/store/reducer";
 import {allproductsreducer} from "./pages/productlist/store/reducer";
 import {allordersreducer} from "./pages/orderlist/store/reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = combineReducers({
-    home: homereducer,
-    detail: detailreducer,
-    cart: cartreducer,
-    login: loginreducer,
-    address: addressreducer,
+    home: homeReducer,
+    detail: detailReducer,
+    cart: cartReducer,
+    login: loginReducer,
+    address: addressReducer,
     payment: paymentreducer,
-    order: orderreducer,
-    finalorder: finalorderreducer,
-    allusers: alluserreducer,
+    order: orderReducer,
+    finalorder: finalOrderReducer,
+    allUsers: allUserReducer,
     allproducts: allproductsreducer,
-    allorders: allordersreducer
+    allOrders: allordersreducer
 })
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 export default store;

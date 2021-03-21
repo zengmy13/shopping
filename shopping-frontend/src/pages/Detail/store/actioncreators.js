@@ -5,7 +5,7 @@ import {
 } from "./actiontype";
 
 
-export const getproduct = (id) => {
+export const getProduct = (id) => {
     return async (dispatch) => {
         try {
             dispatch({
@@ -27,7 +27,7 @@ export const getproduct = (id) => {
 }
 
 
-export const adminchangeproduct = (id, update) => {
+export const adminChangeProduct = (id, update) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -36,7 +36,7 @@ export const adminchangeproduct = (id, update) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.put(`/api/product/${id}`, update, config);
@@ -55,7 +55,7 @@ export const adminchangeproduct = (id, update) => {
 }
 
 
-export const addnewreviews = (id, create) => {
+export const addNewReviews = (id, create) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -64,7 +64,7 @@ export const addnewreviews = (id, create) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             await axios.post(`/api/product/${id}/review`, create, config);

@@ -5,7 +5,7 @@ import {GET_PRODUCTS_FAIL, GET_PRODUCTS_REQUEST, GET_PRODUCTS_SUCCESS, ADMIN_CRE
 } from "./actiontype";
 
 
-export const getproducts = (keyword = "", page) => {
+export const getProducts = (keyword = "", page) => {
     return async (dispatch) => {
         try {
             dispatch({
@@ -27,7 +27,7 @@ export const getproducts = (keyword = "", page) => {
 }
 
 
-export const admincreateproduct = (create) => {
+export const adminCreateProduct = (create) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -36,7 +36,7 @@ export const admincreateproduct = (create) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.post(`/api/product`, create, config);
@@ -56,7 +56,7 @@ export const admincreateproduct = (create) => {
 }
 
 
-export const gettopproducts = () => {
+export const getTopProducts = () => {
     return async (dispatch) => {
         try {
             dispatch({

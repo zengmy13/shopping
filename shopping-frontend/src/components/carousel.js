@@ -1,21 +1,21 @@
 import React, {useEffect} from 'react';
 import {Carousel,Image, Alert} from "react-bootstrap";
-import {gettopproducts} from "../pages/home/store/actioncreators";
+import {getTopProducts} from "../pages/home/store/actioncreators";
 import {useDispatch, useSelector} from "react-redux";
 import {Link} from 'react-router-dom';
-import Loadingpage from "../pages/loading";
+import LoadingPage from "../pages/loading";
 
 
-export default function Productcarousel() {
+export default function ProductCarousel() {
     const dispatch = useDispatch();
-    const {top, toploading, toperror} = useSelector(state => state.home)
+    const {top, topLoading, topError} = useSelector(state => state.home)
     useEffect(() => {
-        dispatch(gettopproducts())
+        dispatch(getTopProducts())
     }, [dispatch])
     return (
         <Carousel pause='hover' className='bg-dark'>
             {
-                toploading ? <Loadingpage/> : toperror ? <Alert>{toperror}</Alert> :
+                topLoading ? <LoadingPage/> : topError ? <Alert>{topError}</Alert> :
                     top.map((item, index) => {
                         return <Carousel.Item key={item._id} as={Link} to={`/product/${item._id}`}>
                             <Image fluid src={item.image}/>

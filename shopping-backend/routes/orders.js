@@ -1,16 +1,16 @@
-var express = require('express');
-var router = express.Router();
-var {checkuserlogin, isadmin} = require("../middleware/index")
-var {createorder, getorderbyid, getuserorders, updateordertopay, admingetallorders, changedeliver} = require("../controller/order")
+const express = require('express');
+const router = express.Router();
+const {checkUserLogin, isAdmin} = require("../middleware/index");
+const {createOrder, getOrderById, getUserOrders, updateOrderToPay, adminGetAllOrders, changeDeliver} = require("../controller/order");
 
 
 /* GET users listing. */
-router.get('/allorders', checkuserlogin, getuserorders)
-router.post('/create', checkuserlogin, createorder)
-router.get('/:id', checkuserlogin, getorderbyid)
-router.put('/:id', checkuserlogin, updateordertopay)
-router.get('/admin/all', checkuserlogin, isadmin, admingetallorders)
-router.put('/:id/deliver', checkuserlogin, isadmin, changedeliver)
+router.get('/allOrders', checkUserLogin, getUserOrders)
+router.post('/create', checkUserLogin, createOrder)
+router.get('/:id', checkUserLogin, getOrderById)
+router.put('/:id', checkUserLogin, updateOrderToPay)
+router.get('/admin/all', checkUserLogin, isAdmin, adminGetAllOrders)
+router.put('/:id/deliver', checkUserLogin, isAdmin, changeDeliver)
 
 
 module.exports = router;

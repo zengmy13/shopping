@@ -1,7 +1,7 @@
 import React from 'react';
 import {Spinner} from "react-bootstrap";
 
-export default function Loadingpage() {
+export default function LoadingPage() {
     return (
         <>
             <Spinner animation='border' style={{

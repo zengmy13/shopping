@@ -14,7 +14,7 @@ import {
 } from "./actiontype";
 
 
-export const admingetallusers = (order) => {
+export const adminGetAllUsers = (order) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -23,7 +23,7 @@ export const admingetallusers = (order) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.get("/api/users", config);
@@ -42,7 +42,7 @@ export const admingetallusers = (order) => {
 }
 
 
-export const deleteuser = (id) => {
+export const deleteUser = (id) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -51,7 +51,7 @@ export const deleteuser = (id) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             await axios.delete(`/api/users/${id}`, config);
@@ -69,7 +69,7 @@ export const deleteuser = (id) => {
 }
 
 
-export const admingetuserdetail = (id) => {
+export const adminGetUserDetail = (id) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -78,7 +78,7 @@ export const admingetuserdetail = (id) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.get(`/api/users/admin/${id}`, config);
@@ -97,7 +97,7 @@ export const admingetuserdetail = (id) => {
 }
 
 
-export const adminupdateuser = (id, update) => {
+export const adminUpdateUser = (id, update) => {
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -106,7 +106,7 @@ export const adminupdateuser = (id, update) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.put(`/api/users/${id}`, update, config);

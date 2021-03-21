@@ -7,80 +7,80 @@ import {
 } from "./actiontype";
 
 
-const defaultvalue = {
+const defaultValue = {
     products: [],
-    productsloading: false,
-    productserror: null,
-    createloading: false,
-    createerror: null,
-    createsuccess: false,
+    productsLoading: false,
+    productsError: null,
+    createLoading: false,
+    createError: null,
+    createSuccess: false,
     top: [],
-    toploading: false,
-    toperror: null,
-    totalpage: 1,
-    pagenum: 1
+    topLoading: false,
+    topError: null,
+    totalPage: 1,
+    pageNum: 1
 }
 
-export const homereducer = (state = defaultvalue, action) => {
+export const homeReducer = (state = defaultValue, action) => {
     switch (action.type) {
         case GET_PRODUCTS_REQUEST:
             return {
                 ...state,
-                productsloading: true
+                productsLoading: true
             }
         case GET_PRODUCTS_SUCCESS:
             return {
                 ...state,
                 products: action.value.products,
-                totalpage: action.value.totalpage,
-                pagenum: action.value.page,
-                productsloading: false,
+                totalPage: action.value.totalPage,
+                pageNum: action.value.page,
+                productsLoading: false,
             }
         case GET_PRODUCTS_FAIL:
             return {
                 ...state,
-                productsloading: false,
-                productserror: action.error
+                productsLoading: false,
+                productsError: action.error
             }
         case ADMIN_CREATE_PRODUCT_REQUEST:
             return {
                 ...state,
-                createloading: true
+                createLoading: true
             }
         case ADMIN_CREATE_PRODUCT_SUCCESS:
             return {
                 ...state,
-                createloading: false,
+                createLoading: false,
                 products: [...state.products, action.value],
-                createsuccess: true
+                createSuccess: true
             }
         case ADMIN_CREATE_PRODUCT_FAIL:
             return {
                 ...state,
-                createloading: false,
-                createerror: action.error,
+                createLoading: false,
+                createError: action.error,
             }
         case GET_TOP_PRODUCTS_REQUEST:
             return {
                 ...state,
-                toploading: true
+                topLoading: true
             }
         case GET_TOP_PRODUCTS_SUCCESS:
             return {
                 ...state,
-                toploading: false,
+                topLoading: false,
                 top: action.value
             }
         case GET_TOP_PRODUCTS_FAIL:
             return {
                 ...state,
-                toploading: false,
-                toperror: action.value
+                topLoading: false,
+                topError: action.value
             }
         case CREATE_RESET:
             return {
                 ...state,
-                createsuccess: false
+                createSuccess: false
             }
     }
     return state;

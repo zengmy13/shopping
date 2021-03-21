@@ -8,76 +8,76 @@ import {
 } from "./actiontype";
 
 
-const defaultvalue={
-    orderdetail:null,
-    orderloading:false,
-    ordererror:null,
+const defaultValue={
+    orderDetail:null,
+    orderLoading:false,
+    orderError:null,
     paypal:false,
-    paypalloading:false,
-    paypalerror:null,
-    deliversuccess:false,
-    deliverloading:false,
-    delivererror:null
+    paypalLoading:false,
+    paypalError:null,
+    deliverSuccess:false,
+    deliverLoading:false,
+    deliverError:null
 }
 
-export const finalorderreducer=(state=defaultvalue,action)=>{
+export const finalOrderReducer=(state=defaultValue,action)=>{
 
     switch(action.type){
         case GET_ORDER_REQUEST:
             return {
                 ...state,
-                orderloading: true
+                orderLoading: true
             }
         case GET_ORDER_SUCCESS:
             return {
                 ...state,
-                orderloading: false,
-                orderdetail:action.order
+                orderLoading: false,
+                orderDetail:action.order
             }
         case GET_ORDER_FAIL:
             return {
                 ...state,
-                ordererror: action.error,
-                orderloading: false,
+                orderError: action.error,
+                orderLoading: false,
             }
         case ORDER_PAYPAL_REQUEST:
             return {
                 ...state,
-                paypalloading: true
+                paypalLoading: true
             }
         case ORDER_PAYPAL_SUCCESS:
             return {
                 ...state,
-                paypalloading: false,
+                paypalLoading: false,
                 paypal:true
             }
         case ORDER_PAYPAL_FAIL:
             return {
                 ...state,
-                paypalerror: action.error,
-                paypalloading: false,
+                paypalError: action.error,
+                paypalLoading: false,
             }
         case ORDER_RESET:
             return {
                 ...state,
-                // orderdetail: null
+                // orderDetail: null
             }
         case ORDER_DELIVER_REQUEST:
             return {
                 ...state,
-                deliverloading: true
+                deliverLoading: true
             }
         case ORDER_DELIVER_SUCCESS:
             return {
                 ...state,
-                deliverloading: false,
-                deliversuccess:true
+                deliverLoading: false,
+                deliverSuccess:true
             }
         case ORDER_DELIVER_FAIL:
             return {
                 ...state,
-                delivererror: action.error,
-                deliverloading: false,
+                deliverError: action.error,
+                deliverLoading: false,
             }
 
         case DELIVER_RESET:

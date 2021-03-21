@@ -2,36 +2,36 @@ import React, {useEffect, useState} from 'react';
 import {Container, Form, Button, Row, Col} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {adminchangeproduct, getproduct} from "../Detail/store/actioncreators";
+import {adminChangeProduct, getProduct} from "../Detail/store/actioncreators";
 import {ADMIN_PRODUCT_RESET} from "../Detail/store/actiontype";
-import {admincreateproduct} from "../home/store/actioncreators";
+import {adminCreateProduct} from "../home/store/actioncreators";
 import axios from "axios";
 import {CREATE_RESET} from "../home/store/actiontype";
 
 
-export default function Productedit(props) {
+export default function ProductEdit(props) {
     const {id} = props.match.params;
-    const [name, setname] = useState("")
-    const [image, setimage] = useState("")
-    const [brand, setbrand] = useState("")
-    const [category, setcategory] = useState("")
-    const [countInStock, setcountInStock] = useState(0)
-    const [description, setdescription] = useState("")
-    const [price, setprice] = useState(0)
+    const [name, setName] = useState("")
+    const [image, setImage] = useState("")
+    const [brand, setBrand] = useState("")
+    const [category, setCategory] = useState("")
+    const [countInStock, setCountInStock] = useState(0)
+    const [description, setDescription] = useState("")
+    const [price, setPrice] = useState(0)
     const dispatch = useDispatch();
-    const {product, updatesuccess} = useSelector(state => state.detail)
-    const {createsuccess} = useSelector(state => state.home)
+    const {product, updateSuccess} = useSelector(state => state.detail)
+    const {createSuccess} = useSelector(state => state.home)
     const [uploading, setuploading] = useState(false);
-    const {currentuser} = useSelector(state => state.login)
+    const {currentUser} = useSelector(state => state.login)
     useEffect(() => {
         if (!id) {
             return;
         }
-        if (!currentuser || !currentuser.isAdmin) {
+        if (!currentUser || !currentUser.isAdmin) {
             props.history.push("/login");
             return
         }
-        if (updatesuccess || createsuccess) {
+        if (updateSuccess || createSuccess) {
             props.history.push("/productlist");
             dispatch({
                 type: ADMIN_PRODUCT_RESET
@@ -41,20 +41,20 @@ export default function Productedit(props) {
             })
         } else {
             if (!product || product._id !== id) {
-                dispatch(getproduct(id))
+                dispatch(getProduct(id))
             } else {
-                setname(product.name)
-                setprice(product.price)
-                setimage(product.image)
-                setbrand(product.brand)
-                setcountInStock(product.countInStock)
-                setcategory(product.category)
-                setdescription(product.description)
+                setName(product.name)
+                setPrice(product.price)
+                setImage(product.image)
+                setBrand(product.brand)
+                setCountInStock(product.countInStock)
+                setCategory(product.category)
+                setDescription(product.description)
             }
         }
-    }, [dispatch, id, product, props.history, updatesuccess, createsuccess, currentuser])
+    }, [dispatch, id, product, props.history, updateSuccess, createSuccess, currentUser])
 
-    const uploadfile = async (e) => {
+    const uploadFile = async (e) => {
         try {
             const file = e.target.files[0];
             const formdata = new FormData();
@@ -66,26 +66,26 @@ export default function Productedit(props) {
                 }
             }
             await axios.post("/api/upload", formdata, config)
-            setimage(file.name);
+            setImage(file.name);
             setuploading(false)
         } catch (error) {
             setuploading(false)
         }
     }
 
-    const handlesubmitform = (e) => {
+    const handleSubmitForm = (e) => {
         e.preventDefault();
         const update = {
             name, price, brand, category, image, countInStock, description
         }
-        dispatch(adminchangeproduct(id, update))
+        dispatch(adminChangeProduct(id, update))
     }
-    const handlecreateproduct = (e) => {
+    const handleCreateProduct = (e) => {
         e.preventDefault();
         const create = {
             name, price, brand, category, image, countInStock, description
         }
-        dispatch(admincreateproduct(create));
+        dispatch(adminCreateProduct(create));
         props.history.push("/productlist")
     }
 
@@ -102,7 +102,7 @@ export default function Productedit(props) {
                                 <Form.Control placeholder='name'
                                               value={name}
                                               type='text'
-                                              onChange={(e) => setname(e.target.value)}>
+                                              onChange={(e) => setName(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -110,7 +110,7 @@ export default function Productedit(props) {
                                 <Form.Control placeholder='price'
                                               value={price}
                                               type='text'
-                                              onChange={(e) => setprice(e.target.value)}>
+                                              onChange={(e) => setPrice(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -118,16 +118,16 @@ export default function Productedit(props) {
                                 <Form.Control placeholder='image'
                                               value={image}
                                               type='text'
-                                              onChange={(e) => setimage(e.target.value)}>
+                                              onChange={(e) => setImage(e.target.value)}>
                                 </Form.Control>
-                                <Form.File id="imagefile" label="Choose file" custom onChange={(e) => uploadfile(e)}/>
+                                <Form.File id="imagefile" label="Choose file" custom onChange={(e) => uploadFile(e)}/>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Brand</Form.Label>
                                 <Form.Control placeholder='brand'
                                               value={brand}
                                               type='text'
-                                              onChange={(e) => setbrand(e.target.value)}>
+                                              onChange={(e) => setBrand(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -135,7 +135,7 @@ export default function Productedit(props) {
                                 <Form.Control placeholder='Count in stock'
                                               value={countInStock}
                                               type='text'
-                                              onChange={(e) => setcountInStock(e.target.value)}>
+                                              onChange={(e) => setCountInStock(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -143,7 +143,7 @@ export default function Productedit(props) {
                                 <Form.Control placeholder='Category'
                                               value={category}
                                               type='text'
-                                              onChange={(e) => setcategory(e.target.value)}>
+                                              onChange={(e) => setCategory(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -151,12 +151,12 @@ export default function Productedit(props) {
                                 <Form.Control placeholder='description'
                                               value={description}
                                               type='text'
-                                              onChange={(e) => setdescription(e.target.value)}>
+                                              onChange={(e) => setDescription(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
                                 <Button type='submit' variant='dark'
-                                        onClick={props.match.params.id ? (e) => handlesubmitform(e) : (e) => handlecreateproduct(e)
+                                        onClick={props.match.params.id ? (e) => handleSubmitForm(e) : (e) => handleCreateProduct(e)
                                         }>
                                     {props.match.params.id ? "UPDATE" : "CREATE"}
                                 </Button>

@@ -10,7 +10,7 @@ export const admingetallorders = () => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${getState().login.currentuser.token}`
+                    Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
             const result = await axios.get(`/api/orders/admin/all`, config);

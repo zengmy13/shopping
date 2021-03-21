@@ -1,33 +1,33 @@
 import {ADMIN_DELETE_PRODUCT_FAIL, ADMIN_DELETE_PRODUCT_REQUEST, ADMIN_DELETE_PRODUCT_SUCCESS} from "./actiontype";
 
 
-const defaultvalue = {
-    deletesuccess: false,
-    deleteloading: false,
-    deleteerror: null,
+const defaultValue = {
+    deleteSuccess: false,
+    deleteLoading: false,
+    deleteError: null,
 
 }
 
-export const allproductsreducer = (state = defaultvalue, action) => {
+export const allproductsreducer = (state = defaultValue, action) => {
 
     switch (action.type) {
 
         case ADMIN_DELETE_PRODUCT_REQUEST:
             return {
                 ...state,
-                deleteloading: true
+                deleteLoading: true
             }
         case ADMIN_DELETE_PRODUCT_SUCCESS:
             return {
                 ...state,
-                deleteloading: false,
-                deletesuccess: true
+                deleteLoading: false,
+                deleteSuccess: true
             }
         case ADMIN_DELETE_PRODUCT_FAIL:
             return {
                 ...state,
-                deleteloading: false,
-                deleteerror: action.error,
+                deleteLoading: false,
+                deleteError: action.error,
             }
 
 

@@ -1,6 +1,6 @@
 const User = require("../models/user")
-var generatetoken = require("../utils/index");
-var bcrypt = require('bcryptjs');
+const generateToken = require("../utils/index");
+const bcrypt = require('bcryptjs');
 const asyncHandler = require('express-async-handler')
 const login = asyncHandler(async (req, res, next) => {
     const {email, password} = req.body;
@@ -13,7 +13,7 @@ const login = asyncHandler(async (req, res, next) => {
             email: user.email,
             name: user.name,
             isAdmin: user.isAdmin,
-            token: generatetoken(user._id)
+            token: generateToken(user._id)
         })
     } else {
         res.status(401);
@@ -23,21 +23,21 @@ const login = asyncHandler(async (req, res, next) => {
 
 const register = asyncHandler(async (req, res, next) => {
     const {email, password, name} = req.body;
-    const existuser = await User.findOne({email})
-    if (existuser) {
+    const existUser = await User.findOne({email})
+    if (existUser) {
         res.status(400);
         throw new Error("Already exist")
     }
-    const newuser = await User.create({
+    const newUser = await User.create({
         email, password, name
     })
-    if (newuser) {
+    if (newUser) {
         res.json({
-            id: newuser._id,
-            name: newuser.name,
-            email: newuser.email,
-            isAdmin: newuser.isAdmin,
-            token: generatetoken(newuser._id)
+            id: newUser._id,
+            name: newUser.name,
+            email: newUser.email,
+            isAdmin: newUser.isAdmin,
+            token: generateToken(newUser._id)
         })
     } else {
         res.status(400);
@@ -45,7 +45,7 @@ const register = asyncHandler(async (req, res, next) => {
     }
 })
 
-const getprofile = asyncHandler(async (req, res, next) => {
+const getProfile = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user._id)
     if (user) {
         res.json({
@@ -60,37 +60,38 @@ const getprofile = asyncHandler(async (req, res, next) => {
     }
 })
 
-const updateprofile = asyncHandler(async (req, res, next) => {
+const updateProfile = asyncHandler(async (req, res, next) => {
     const {name, email, password} = req.body;
     const user = await User.findById(req.user._id);
     if (user) {
         user.name = name || user.name;
         user.email = email || user.email;
         user.password = password || user.password;
-        const updateduser = await user.save();
+        const updatedUser = await user.save();
         res.json({
-            id: updateduser._id,
-            name: updateduser.name,
-            email: updateduser.email,
-            isAdmin: updateduser.isAdmin,
-            token: generatetoken(updateduser._id)
+            id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+            token: generateToken(updatedUser._id)
         })
     } else {
         res.status(404);
         throw new Error("not found user")
     }
 })
-const admingetallusers = asyncHandler(async (req, res, next) => {
-    const allusers = await User.find({});
-    if (allusers) {
-        res.json(allusers)
+
+const adminGetAllUsers = asyncHandler(async (req, res, next) => {
+    const allUsers = await User.find({});
+    if (allUsers) {
+        res.json(allUsers)
     } else {
         res.status(404);
         throw new Error("not found users")
     }
 })
 
-const deleteuser = asyncHandler(async (req, res, next) => {
+const deleteUser = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.params.id);
     if (user) {
         await user.remove();
@@ -103,8 +104,7 @@ const deleteuser = asyncHandler(async (req, res, next) => {
     }
 })
 
-
-const adminfinduser = asyncHandler(async (req, res, next) => {
+const adminFindUser = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.params.id).select("-password");
     if (user) {
         res.json(user)
@@ -114,19 +114,18 @@ const adminfinduser = asyncHandler(async (req, res, next) => {
     }
 })
 
-
-const updateadminuser = asyncHandler(async (req, res, next) => {
+const updateAdminUser = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.params.id);
     if (user) {
         user.name = req.body.name || user.name;
         user.email = req.body.email || user.email;
         user.isAdmin = req.body.isAdmin;
-        const updateduser = await user.save();
+        const updatedUser = await user.save();
         res.json({
-            id: updateduser._id,
-            name: updateduser.name,
-            email: updateduser.email,
-            isAdmin: updateduser.isAdmin
+            id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin
         })
     } else {
         res.status(404);
@@ -134,7 +133,6 @@ const updateadminuser = asyncHandler(async (req, res, next) => {
     }
 })
 
-
 module.exports = {
-    login, register, getprofile, updateprofile, admingetallusers, updateadminuser, adminfinduser, deleteuser
+    login, register, getProfile, updateProfile, adminGetAllUsers, updateAdminUser, adminFindUser, deleteUser
 }

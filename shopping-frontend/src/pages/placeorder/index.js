@@ -2,42 +2,42 @@ import React from 'react';
 import Checkout from "../../components/checksteps";
 import {Button, Col, Container, Image, Row, ListGroup, Alert} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {createorder} from "./store/actioncreator";
-import Loadingpage from "../loading";
+import {createOrder} from "./store/actioncreator";
+import LoadingPage from "../loading";
 
 
-export default function Placeorder(props) {
+export default function PlaceOrder(props) {
     const dispatch = useDispatch();
-    const {shippingaddress} = useSelector(state => state.address);
-    const {paymentmethod} = useSelector(state => state.payment);
-    const {cartitems} = useSelector(state => state.cart);
-    const {currentuser} = useSelector(state => state.login)
+    const {shippingAddress} = useSelector(state => state.address);
+    const {paymentMethod} = useSelector(state => state.payment);
+    const {cartItems} = useSelector(state => state.cart);
+    const {currentUser} = useSelector(state => state.login)
 
-    const {order, orderloading, ordererror, successorder} = useSelector(state => state.order)
-    const itemsprice = cartitems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
-    const shippingprice = (itemsprice > 100 ? 0 : 100).toFixed(2);
-    const taxprice = Number((itemsprice * 0.15).toFixed(2));
-    const totalprice = (Number(taxprice) + Number(shippingprice) + Number(itemsprice)).toFixed(2);
-    const orderitems = cartitems.map((item, index) => {
+    const {order, orderLoading, orderError, successOrder} = useSelector(state => state.order)
+    const itemsPrice = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
+    const shippingPrice = (itemsPrice > 100 ? 0 : 100).toFixed(2);
+    const taxPrice = Number((itemsPrice * 0.15).toFixed(2));
+    const totalPrice = (Number(taxPrice) + Number(shippingPrice) + Number(itemsPrice)).toFixed(2);
+    const orderItems = cartItems.map((item, index) => {
         return {
             name: item.name,
             image: item.image,
             price: item.price,
             qty: item.qty,
-            productid: item._id
+            productId: item._id
         }
     })
-    if (!currentuser) {
+    if (!currentUser) {
         props.history.push("/login")
     }
-    if (successorder) {
+    if (successOrder) {
         props.history.push(`/order/${order._id}`)
     }
-    const handlesubmit = () => {
+    const handleSubmit = () => {
         const order = {
-            itemsprice, shippingprice, taxprice, totalprice, shippingaddress, paymentmethod, orderitems
+            itemsPrice, shippingPrice, taxPrice, totalPrice, shippingAddress, paymentMethod, orderItems
         }
-        dispatch(createorder(order));
+        dispatch(createOrder(order));
     }
     return (
         <Container>
@@ -47,25 +47,25 @@ export default function Placeorder(props) {
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
                             <h3>SHIPPING</h3>
-                            <p className='mb-0'>Address: {shippingaddress.address + ","}
-                                {shippingaddress.city + ","}
-                                {shippingaddress.postcode + ","}
-                                {shippingaddress.country}
+                            <p className='mb-0'>Address: {shippingAddress.address + ","}
+                                {shippingAddress.city + ","}
+                                {shippingAddress.postcode + ","}
+                                {shippingAddress.country}
                             </p>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h3>PAYMENT METHOD</h3>
-                            <p className='mb-0'>Method: {paymentmethod}</p>
+                            <p className='mb-0'>Method: {paymentMethod}</p>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h3>ORDER ITEMS</h3>
                             <ListGroup variant='flush'>
                                 {
-                                    cartitems.map((item, index) => {
+                                    cartItems.map((item, index) => {
                                         return <ListGroup.Item>
                                             <Row>
                                                 <Col md={1}>
-                                                    <Image src={item.image} fluid></Image>
+                                                    <Image src={item.image} fluid/>
                                                 </Col>
                                                 <Col md={7}>
                                                     {item.name}
@@ -92,7 +92,7 @@ export default function Placeorder(props) {
                                     Items
                                 </Col>
                                 <Col width={6}>
-                                    ${itemsprice}
+                                    ${itemsPrice}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
@@ -102,7 +102,7 @@ export default function Placeorder(props) {
                                     Shipping
                                 </Col>
                                 <Col width={6}>
-                                    ${shippingprice}
+                                    ${shippingPrice}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
@@ -112,7 +112,7 @@ export default function Placeorder(props) {
                                     Tax
                                 </Col>
                                 <Col width={6}>
-                                    ${taxprice}
+                                    ${taxPrice}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
@@ -122,22 +122,22 @@ export default function Placeorder(props) {
                                     Total
                                 </Col>
                                 <Col width={6}>
-                                    ${totalprice}
+                                    ${totalPrice}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
                         {
-                            ordererror ? <ListGroup.Item>
-                                <Alert variant='danger'>{ordererror}</Alert>
+                            orderError ? <ListGroup.Item>
+                                <Alert variant='danger'>{orderError}</Alert>
                             </ListGroup.Item> : null
                         }
                         {
-                            orderloading ? <Loadingpage/> : null
+                            orderLoading ? <LoadingPage/> : null
                         }
                         <ListGroup.Item>
                             <Button bg='dark' className='btn btn-block' variant='dark'
-                                    disabled={cartitems.length === 0}
-                                    onClick={handlesubmit}>
+                                    disabled={cartItems.length === 0}
+                                    onClick={handleSubmit}>
                                 PLACE ORDER
                             </Button>
                         </ListGroup.Item>

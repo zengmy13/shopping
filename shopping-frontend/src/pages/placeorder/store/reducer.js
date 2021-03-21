@@ -1,29 +1,29 @@
 import {CREATE_ORDER_FAIL, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS} from "./actiontype";
-const defaultvalue = {
+const defaultValue = {
     order: null,
-    orderloading: false,
-    ordererror: null,
-    successorder: false
+    orderLoading: false,
+    orderError: null,
+    successOrder: false
 }
-export const orderreducer = (state = defaultvalue, action) => {
+export const orderReducer = (state = defaultValue, action) => {
     switch (action.type) {
         case CREATE_ORDER_REQUEST:
             return {
                 ...state,
-                orderloading: true
+                orderLoading: true
             }
         case CREATE_ORDER_SUCCESS:
             return {
                 ...state,
-                orderloading: false,
+                orderLoading: false,
                 order: action.order,
-                successorder: true
+                successOrder: true
             }
         case CREATE_ORDER_FAIL:
             return {
                 ...state,
-                orderloading: false,
-                ordererror: action.error
+                orderLoading: false,
+                orderError: action.error
             }
     }
     return state;

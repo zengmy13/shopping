@@ -3,32 +3,32 @@ import {Container, Form, Button, Row, Col, Alert} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {register} from "./store/actioncreators";
-import Loadingpage from "../loading";
+import LoadingPage from "../loading";
 import {REGISTER_RESET} from "./store/actiontype";
 
 export default function Register(props) {
-    const [email, setemail] = useState("")
-    const [name, setname] = useState("")
-    const [password, setpassword] = useState("")
-    const [confirmpassword, setconfirmpassword] = useState("");
-    const [message, setmessage] = useState("")
+    const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [message, setMessage] = useState("")
     const dispatch = useDispatch();
-    const {registerloading, registererror, currentuser} = useSelector(state => state.login)
+    const {registerLoading, registerError, currentUser} = useSelector(state => state.login)
     const redirect = props.location.search ? props.location.search.split("=")[1] : "/";
 
     useEffect(() => {
         dispatch({
             type: REGISTER_RESET
         })
-        if (currentuser) {
+        if (currentUser) {
             props.history.push(redirect);
         }
-    }, [currentuser, props.history, dispatch])
+    }, [currentUser, props.history, dispatch])
 
-    const handlesubmitform = (e) => {
+    const handleSubmitForm = (e) => {
         e.preventDefault()
-        if (password !== confirmpassword) {
-            setmessage("password do not match")
+        if (password !== confirmPassword) {
+            setMessage("password do not match")
             return;
         }
         dispatch(register(email, password, name));
@@ -44,10 +44,10 @@ export default function Register(props) {
                             message ? <Alert variant='danger'>{message}</Alert> : null
                         }
                         {
-                            registerloading ? <Loadingpage/> : null
+                            registerLoading ? <LoadingPage/> : null
                         }
                         {
-                            registererror ? <Alert variant='danger'>{registererror}</Alert> : null
+                            registerError ? <Alert variant='danger'>{registerError}</Alert> : null
                         }
                         <Form>
                             <Form.Group>
@@ -55,7 +55,7 @@ export default function Register(props) {
                                 <Form.Control placeholder='name'
                                               value={name}
                                               type='text'
-                                              onChange={(e) => setname(e.target.value)}>
+                                              onChange={(e) => setName(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -63,7 +63,7 @@ export default function Register(props) {
                                 <Form.Control placeholder='email'
                                               value={email}
                                               type='email'
-                                              onChange={(e) => setemail(e.target.value)}>
+                                              onChange={(e) => setEmail(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -71,20 +71,20 @@ export default function Register(props) {
                                 <Form.Control placeholder='password'
                                               type='password'
                                               value={password}
-                                              onChange={(e) => setpassword(e.target.value)}>
+                                              onChange={(e) => setPassword(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Confirm Password</Form.Label>
                                 <Form.Control placeholder='confirm password'
                                               type='password'
-                                              value={confirmpassword}
-                                              onChange={(e) => setconfirmpassword(e.target.value)}>
+                                              value={confirmPassword}
+                                              onChange={(e) => setConfirmPassword(e.target.value)}>
                                 </Form.Control>
                             </Form.Group>
                             <Form.Group>
                                 <Button type='submit' variant='dark'
-                                        onClick={(e) => handlesubmitform(e)}>
+                                        onClick={(e) => handleSubmitForm(e)}>
                                     REGISTER
                                 </Button>
                             </Form.Group>

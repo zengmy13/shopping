@@ -1,39 +1,38 @@
 import {ADDTOCARTITEM, REMOVECARTITEM, RESET_CART} from "./actiontype";
 
 
-const cartitemsfromlocalstorage = window.localStorage.getItem("cartitems")
-    ? JSON.parse(window.localStorage.getItem("cartitems"))
-    : []
-const defaultvalue = {
-    cartitems: cartitemsfromlocalstorage
+const cartItemsFromLocalStorage = window.localStorage.getItem("cartItems")
+    ? JSON.parse(window.localStorage.getItem("cartItems")) : []
+const defaultValue = {
+    cartItems: cartItemsFromLocalStorage
 }
 
 
-export const cartreducer = (state = defaultvalue, action) => {
+export const cartReducer = (state = defaultValue, action) => {
     switch (action.type) {
         case ADDTOCARTITEM:
             const item = action.value;
-            const exist = state.cartitems.find(x => x._id === item._id);
+            const exist = state.cartItems.find(x => x._id === item._id);
             if (exist) {
                 return {
                     ...state,
-                    cartitems: state.cartitems.map(x => x._id === exist._id ? item : x)
+                    cartItems: state.cartItems.map(x => x._id === exist._id ? item : x)
                 }
             } else {
                 return {
                     ...state,
-                    cartitems: [...state.cartitems, item]
+                    cartItems: [...state.cartItems, item]
                 }
             }
         case REMOVECARTITEM:
             return {
                 ...state,
-                cartitems: state.cartitems.filter(x => x._id !== action.id)
+                cartItems: state.cartItems.filter(x => x._id !== action.id)
             }
         case RESET_CART:
             return {
                 ...state,
-                cartitems: [],
+                cartItems: [],
             }
     }
     return state;

@@ -1,35 +1,35 @@
 import React, {useEffect, useState} from 'react';
-import {addnewreviews, getproduct} from "./store/actioncreators";
+import {addNewReviews, getProduct} from "./store/actioncreators";
 import {useDispatch, useSelector} from "react-redux";
 import {Col, Row, Button, ListGroup, Container, Image, Form, Alert} from 'react-bootstrap'
 import Rating from "../../components/rating";
-import Loadingpage from "../loading";
+import LoadingPage from "../loading";
 import {Link} from 'react-router-dom';
 
 
-export default function Productdetail(props) {
+export default function ProductDetail(props) {
     const {id} = props.match.params;
     const dispatch = useDispatch();
-    const {product, productloading, addreviewsuccess, addreviewloading, addreviewerror, producterror} = useSelector(state => state.detail);
-    const {currentuser} = useSelector(state => state.login)
+    const {product, productLoading, addReviewSuccess, addReviewLoading, addReviewError, productError} = useSelector(state => state.detail);
+    const {currentUser} = useSelector(state => state.login)
     const [qty, setqty] = useState(1);
     const [rating, setrating] = useState("5");
     const [comment, setcomment] = useState("");
     useEffect(() => {
-        dispatch(getproduct(id))
-    }, [dispatch, id, props.history, addreviewsuccess])
+        dispatch(getProduct(id))
+    }, [dispatch, id, props.history, addReviewSuccess])
     const goback = () => {
         props.history.push('/');
     }
     const handlechooseproduct = (qty) => {
         props.history.push(`/cart/${id}?qty=${qty}`)
     }
-    const handlesubmit = () => {
+    const handleSubmit = () => {
         const create = {
             rating: rating,
             comment: comment
         }
-        dispatch(addnewreviews(id, create))
+        dispatch(addNewReviews(id, create))
     }
     return (
         <Container>
@@ -37,12 +37,12 @@ export default function Productdetail(props) {
                 GO BACK
             </Button>
             {
-                productloading ? <Loadingpage/> : producterror ?
-                    <Alert variant='danger' style={{margin: "100px auto"}}>{producterror}</Alert> :
+                productLoading ? <LoadingPage/> : productError ?
+                    <Alert variant='danger' style={{margin: "100px auto"}}>{productError}</Alert> :
                     <>
                         <Row>
                             <Col md={4}>
-                                <Image src={product?.image} fluid></Image>
+                                <Image src={product?.image} fluid/>
                             </Col>
                             <Col md={4}>
                                 <ListGroup variant='flush'>
@@ -50,8 +50,7 @@ export default function Productdetail(props) {
                                         {product?.name}
                                     </ListGroup.Item>
                                     <ListGroup.Item>
-                                        <Rating value={product?.rating}
-                                                text={`${product?.numreviews} reviews`}></Rating>
+                                        <Rating value={product?.rating} text={`${product?.numReviews} reviews`}/>
                                     </ListGroup.Item>
                                     <ListGroup.Item>
                                         Price: ${product?.price}
@@ -125,9 +124,9 @@ export default function Productdetail(props) {
                                     </ListGroup>
                                 }
                                 <h4 className='my-4'>WRITE A CUSTOMER REVIEW</h4>
-                                {addreviewloading && <Loadingpage/>}
-                                {addreviewerror && <Alert variant='danger'>{addreviewerror}</Alert>}
-                                {currentuser ? <Form>
+                                {addReviewLoading && <LoadingPage/>}
+                                {addReviewError && <Alert variant='danger'>{addReviewError}</Alert>}
+                                {currentUser ? <Form>
                                             <Form.Group>
                                                 <Form.Label>Rating</Form.Label>
                                                 <Form.Control as='select' onChange={(e) => setrating(e.target.value)}>
@@ -146,7 +145,7 @@ export default function Productdetail(props) {
                                                 </Form.Control>
                                             </Form.Group>
                                             <Button variant='dark' bg='dark' type='submit'
-                                                    onClick={(e) => handlesubmit(e)}>Submit</Button>
+                                                    onClick={(e) => handleSubmit(e)}>Submit</Button>
                                         </Form> :<Alert variant='info'>Please <Link to='/login'>sign in</Link> to write a review</Alert>}
                             </Col>
                         </Row>

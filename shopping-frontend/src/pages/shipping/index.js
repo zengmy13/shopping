@@ -2,29 +2,29 @@ import React, {useState} from 'react';
 import {Form, Button, Col, Row, Container} from 'react-bootstrap';
 import Checkout from "../../components/checksteps";
 import {useDispatch, useSelector} from "react-redux";
-import {saveaddress} from "./store/actioncreators";
+import {saveAddress} from "./store/actioncreators";
 
 
 export default function Shipping(props) {
 
-    const [address, setaddress] = useState("");
-    const [city, setcity] = useState("");
-    const [postcode, setpostcode] = useState("");
-    const [country, setcountry] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [postcode, setPostCode] = useState("");
+    const [country, setCountry] = useState("");
     const dispatch = useDispatch();
-    const {currentuser} = useSelector(state => state.login)
-    if (!currentuser) {
+    const {currentUser} = useSelector(state => state.login)
+    if (!currentUser) {
         props.history.push("/login");
     }
-    const handlesubmitform = (e) => {
+    const handleSubmitForm = (e) => {
         e.preventDefault();
-        const shippingaddress = {
+        const shippingAddress = {
             address,
             city,
             postcode,
             country
         }
-        dispatch(saveaddress(shippingaddress));
+        dispatch(saveAddress(shippingAddress));
         props.history.push("/payment")
     }
     return (
@@ -38,7 +38,7 @@ export default function Shipping(props) {
                         <Form.Control placeholder='Address'
                                       value={address}
                                       type='text'
-                                      onChange={(e) => setaddress(e.target.value)}>
+                                      onChange={(e) => setAddress(e.target.value)}>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
@@ -46,7 +46,7 @@ export default function Shipping(props) {
                         <Form.Control placeholder='City'
                                       value={city}
                                       type='text'
-                                      onChange={(e) => setcity(e.target.value)}>
+                                      onChange={(e) => setCity(e.target.value)}>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
@@ -54,7 +54,7 @@ export default function Shipping(props) {
                         <Form.Control placeholder='Postal Code'
                                       type='text'
                                       value={postcode}
-                                      onChange={(e) => setpostcode(e.target.value)}>
+                                      onChange={(e) => setPostCode(e.target.value)}>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
@@ -62,12 +62,12 @@ export default function Shipping(props) {
                         <Form.Control placeholder='Country'
                                       type='text'
                                       value={country}
-                                      onChange={(e) => setcountry(e.target.value)}>
+                                      onChange={(e) => setCountry(e.target.value)}>
                         </Form.Control>
                     </Form.Group>
                     <Form.Group>
                         <Button type='submit' variant='dark'
-                                onClick={(e) => handlesubmitform(e)}>
+                                onClick={(e) => handleSubmitForm(e)}>
                             COUNTINUE
                         </Button>
                     </Form.Group>

@@ -4,7 +4,7 @@ import {Form, Button} from "react-bootstrap";
 
 export default function Searchbox(props) {
     const [keyword, setkeyword] = useState("");
-    const handlesubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         if (keyword.trim()) {
             props.history.push(`/search/${keyword}`)
@@ -21,7 +21,7 @@ export default function Searchbox(props) {
             </Form.Group>
             <Form.Group className='ml-2'>
                 <Button className='btn' variant='outline-success' type='submit'
-                        onClick={(e) => handlesubmit(e)}>SEARCH</Button>
+                        onClick={(e) => handleSubmit(e)}>SEARCH</Button>
             </Form.Group>
         </Form>
     )

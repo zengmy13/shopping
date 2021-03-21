@@ -2,47 +2,47 @@ import React, {useEffect, useState} from 'react';
 import {Container, Form, Button, Row, Col, Alert} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
-import {admingetuserdetail, adminupdateuser} from "./store/actioncreators";
+import {adminGetUserDetail, adminUpdateUser} from "./store/actioncreators";
 import {ADMIN_USER_RESET} from "./store/actiontype";
-import Loadingpage from "../loading";
+import LoadingPage from "../loading";
 
 
-export default function Useredit(props) {
+export default function UserEdit(props) {
     const {id} = props.match.params;
-    const [email, setemail] = useState("")
-    const [name, setname] = useState("")
+    const [email, setEmail] = useState("")
+    const [name, setName] = useState("")
     const [isadmin, setisadmin] = useState(false);
-    const {currentuser} = useSelector(state => state.login)
+    const {currentUser} = useSelector(state => state.login)
     const dispatch = useDispatch();
-    const {user, updateloading, updateerror, updatesuccess} = useSelector(state => state.allusers)
+    const {user, updateLoading, updateError, updateSuccess} = useSelector(state => state.allUsers)
 
     useEffect(() => {
-        if (!currentuser || !currentuser?.isAdmin) {
+        if (!currentUser || !currentUser?.isAdmin) {
             props.history.push("/login");
             return;
         }
-        if (updatesuccess) {
+        if (updateSuccess) {
             dispatch({
                 type: ADMIN_USER_RESET
             })
             props.history.push("/userlist");
         }
         if (!user || user._id != id) {
-            dispatch(admingetuserdetail(id))
+            dispatch(adminGetUserDetail(id))
         } else {
-            setname(user.name);
-            setemail(user.email);
+            setName(user.name);
+            setEmail(user.email);
             setisadmin(user.isAdmin)
         }
-    }, [dispatch, id, user, currentuser])
-    const handlesubmitform = (e) => {
+    }, [dispatch, id, user, currentUser])
+    const handleSubmitForm = (e) => {
         e.preventDefault();
         const update = {
             name: name,
             email: email,
             isAdmin: isadmin
         }
-        dispatch(adminupdateuser(id, update))
+        dispatch(adminUpdateUser(id, update))
     }
 
     return (
@@ -53,14 +53,14 @@ export default function Useredit(props) {
                     <Col md={6}>
                         <h2 className='py-4'>EDIT USER</h2>
                         {
-                            updateloading ? <Loadingpage/> : updateerror ? <Alert variant='danger'>{updateerror}</Alert>
+                            updateLoading ? <LoadingPage/> : updateError ? <Alert variant='danger'>{updateError}</Alert>
                                 : <Form>
                                     <Form.Group>
                                         <Form.Label>Name</Form.Label>
                                         <Form.Control placeholder='name'
                                                       value={name}
                                                       type='text'
-                                                      onChange={(e) => setname(e.target.value)}>
+                                                      onChange={(e) => setName(e.target.value)}>
                                         </Form.Control>
                                     </Form.Group>
                                     <Form.Group>
@@ -68,7 +68,7 @@ export default function Useredit(props) {
                                         <Form.Control placeholder='email'
                                                       value={email}
                                                       type='email'
-                                                      onChange={(e) => setemail(e.target.value)}>
+                                                      onChange={(e) => setEmail(e.target.value)}>
                                         </Form.Control>
                                     </Form.Group>
                                     <Form.Group>
@@ -81,7 +81,7 @@ export default function Useredit(props) {
                                     </Form.Group>
                                     <Form.Group>
                                         <Button type='submit' variant='dark'
-                                                onClick={(e) => handlesubmitform(e)}>
+                                                onClick={(e) => handleSubmitForm(e)}>
                                             UPDATE
                                         </Button>
                                     </Form.Group>

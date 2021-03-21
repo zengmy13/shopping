@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
 
-const orderschema = mongoose.Schema({
+const orderSchema = mongoose.Schema({
     user: {
         required: true,
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    orderitems: [{
-        productid: {ref: "Product", required: true, type: mongoose.Schema.Types.ObjectId},
+    orderItems: [{
+        productId: {ref: "Product", required: true, type: mongoose.Schema.Types.ObjectId},
         name: {type: String, required: true},
         image: {type: String, required: true},
         price: {type: Number, required: true},
         qty: {type: Number, required: true}
     }],
-    shippingaddress: {
+    shippingAddress: {
         country: {
             type: String,
             required: true
@@ -32,7 +32,7 @@ const orderschema = mongoose.Schema({
             required: true
         }
     },
-    paymentmethod: {
+    paymentMethod: {
         required: true,
         type: String
     },
@@ -58,21 +58,21 @@ const orderschema = mongoose.Schema({
     deliverat: {
         type: Date
     },
-    itemsprice: {
+    itemsPrice: {
         required: true,
         type: Number
     },
-    shippingprice: {
+    shippingPrice: {
         required: true,
         type: Number,
         default: 0.00
     },
-    taxprice: {
+    taxPrice: {
         required: true,
         type: Number,
         default: 0.00
     },
-    totalprice: {
+    totalPrice: {
         required: true,
         type: Number,
         default: 0.00
@@ -82,5 +82,5 @@ const orderschema = mongoose.Schema({
 })
 
 
-const Order = mongoose.model("orders", orderschema);
+const Order = mongoose.model("orders", orderSchema);
 module.exports = Order

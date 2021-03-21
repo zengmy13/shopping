@@ -2,43 +2,42 @@ import React, {useEffect, useState} from "react";
 import {Row, Col, Container, Form, Button, Alert, Table} from 'react-bootstrap'
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getallorders, getprofile, updateprofile} from "./store/actioncreators";
-import Loadingpage from "../loading";
+import {getAllOrders, getProfile, updateProfile} from "./store/actioncreators";
+import LoadingPage from "../loading";
 
 
 export default function Profile(props) {
-    const [name, setname] = useState("");
-    const [email, setemail] = useState("")
-    const [password, setpassword] = useState("")
-    const [confirmpassword, setconfirmpassword] = useState("");
-    const [message, setmessage] = useState("");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [message, setMessage] = useState("");
     const dispatch = useDispatch();
     const {id} = props.match.params;
-    const {currentuser, profile, updateloading, updateerror, allorders, allordersloading, allorderserror} = useSelector(state => state.login);
+    const {currentUser, profile, updateLoading, updateError, allOrders, allOrdersLoading, allOrdersError} = useSelector(state => state.login);
 
     useEffect(() => {
-        if (!currentuser) {
+        if (!currentUser) {
             props.history.push("/login");
-            return;
         }else{
             if (!profile) {
-                dispatch(getprofile(id));
-                dispatch(getallorders());
+                dispatch(getProfile(id));
+                dispatch(getAllOrders());
             } else {
-                setname(profile.name);
-                setemail(profile.email);
+                setName(profile.name);
+                setEmail(profile.email);
             }
         }
 
-    }, [dispatch, id, profile, currentuser])
+    }, [dispatch, id, profile, currentUser])
 
 
-    const handleupdate = (e) => {
+    const handleUdate = (e) => {
         e.preventDefault()
-        if (confirmpassword !== password) {
-            setmessage("password do not match")
+        if (confirmPassword !== password) {
+            setMessage("password do not match")
         }
-        dispatch(updateprofile({name, email, password}))
+        dispatch(updateProfile({name, email, password}))
     }
     return (
         <Container>
@@ -46,10 +45,10 @@ export default function Profile(props) {
                 <Col md={3}>
                     <h4 className='mb-3'>MY PROFILE</h4>
                     {
-                        updateloading ? <Loadingpage/> : null
+                        updateLoading ? <LoadingPage/> : null
                     }
                     {
-                        updateerror ? <Alert variant='danger'>{updateerror}</Alert> : null
+                        updateError ? <Alert variant='danger'>{updateError}</Alert> : null
                     }
                     {
                         message ? <Alert variant='danger'>{message}</Alert> : null
@@ -60,7 +59,7 @@ export default function Profile(props) {
                             <Form.Control placeholder='name'
                                           value={name}
                                           type='text'
-                                          onChange={(e) => setname(e.target.value)}>
+                                          onChange={(e) => setName(e.target.value)}>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group>
@@ -68,7 +67,7 @@ export default function Profile(props) {
                             <Form.Control placeholder='email'
                                           value={email}
                                           type='email'
-                                          onChange={(e) => setemail(e.target.value)}>
+                                          onChange={(e) => setEmail(e.target.value)}>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group>
@@ -76,20 +75,20 @@ export default function Profile(props) {
                             <Form.Control placeholder='password'
                                           type='password'
                                           value={password}
-                                          onChange={(e) => setpassword(e.target.value)}>
+                                          onChange={(e) => setPassword(e.target.value)}>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control placeholder='confirm password'
                                           type='password'
-                                          value={confirmpassword}
-                                          onChange={(e) => setconfirmpassword(e.target.value)}>
+                                          value={confirmPassword}
+                                          onChange={(e) => setConfirmPassword(e.target.value)}>
                             </Form.Control>
                         </Form.Group>
                         <Form.Group>
                             <Button type='submit' variant='dark'
-                                    onClick={(e) => handleupdate(e)}>
+                                    onClick={(e) => handleUdate(e)}>
                                 UPDATE
                             </Button>
                         </Form.Group>
@@ -98,7 +97,7 @@ export default function Profile(props) {
                 <Col md={9}>
                     <h4 className='mb-4'>MY ORDRES</h4>
                     {
-                        allorderserror ? <Alert varaint='danger'>{allorderserror}</Alert> : null
+                        allOrdersError ? <Alert varaint='danger'>{allOrdersError}</Alert> : null
                     }
                     <Table striped bordered hover style={{fontSize: ".8rem"}} responsive>
                         <thead>
@@ -113,32 +112,32 @@ export default function Profile(props) {
                         </thead>
                         <tbody className='text-center'>
                         {
-                            allordersloading
+                            allOrdersLoading
                                 ? <tr>
                                     <td colSpan={6}>
-                                        <Loadingpage/>
+                                        <LoadingPage/>
                                     </td>
                                 </tr>
-                                : allorderserror ?
+                                : allOrdersError ?
                                 <td colSpan={6}>
-                                    <Alert variant='danger'>{allorderserror}</Alert>
+                                    <Alert variant='danger'>{allOrdersError}</Alert>
                                 </td> :
-                                allorders.length == 0 ? <tr>
+                                allOrders.length == 0 ? <tr>
                                         <td colSpan={6}>
                                             YOUR ORDER IS EMPTY
                                         </td>
                                     </tr> :
-                                    allorders.map((order, index) => {
+                                    allOrders.map((order, index) => {
                                         return <tr key={order._id}>
                                             <td>{order._id}</td>
                                             <td>{order.createdAt.substr(0, 10)}</td>
-                                            <td>${order.totalprice}</td>
+                                            <td>${order.totalPrice}</td>
                                             <td>{order.ispaid ? order.paidat :
-                                                <i className='fas fa-times' style={{color: "red"}}></i>
+                                                <i className='fas fa-times' style={{color: "red"}}/>
                                             }</td>
                                             <td>{order.deliver ?
                                                 order.deliverat
-                                                : <i className='fas fa-times' style={{color: "red"}}></i>}</td>
+                                                : <i className='fas fa-times' style={{color: "red"}}/>}</td>
                                             <td>
                                                 <Button as={Link} to={`/order/${order._id}`}
                                                         size='sm'

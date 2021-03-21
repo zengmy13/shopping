@@ -6,19 +6,19 @@ import {addpaymentmethod} from "./store/actioncreators";
 
 
 export default function Payment(props) {
-    const [paymentmethod, setpaymentmethod] = useState("PayPal");
+    const [paymentMethod, setPaymentMethod] = useState("PayPal");
     const dispatch = useDispatch()
-    const {shippingaddress} = useSelector(state => state.address)
-    const {currentuser} = useSelector(state => state.login);
-    if (!shippingaddress) {
+    const {shippingAddress} = useSelector(state => state.address)
+    const {currentUser} = useSelector(state => state.login);
+    if (!shippingAddress) {
         props.history.push("/shipping")
     }
-    if (!currentuser) {
+    if (!currentUser) {
         props.history.push("/shipping")
     }
-    const handlesubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addpaymentmethod(paymentmethod));
+        dispatch(addpaymentmethod(paymentMethod));
         props.history.push("/placeorder")
     }
     return (
@@ -31,10 +31,10 @@ export default function Payment(props) {
                     <Form>
                         <Form.Group>
                             <Form.Check type='radio' label={'PayPal or Credit Card'}
-                                        value={paymentmethod}
-                                        checked onChange={(e) => setpaymentmethod(e.target.value)}/>
+                                        value={paymentMethod}
+                                        checked onChange={(e) => setPaymentMethod(e.target.value)}/>
                         </Form.Group>
-                        <Button type='submit' variant='dark' bg='dark' onClick={(e) => handlesubmit(e)}>
+                        <Button type='submit' variant='dark' bg='dark' onClick={(e) => handleSubmit(e)}>
                             CONTINUE
                         </Button>
                     </Form>

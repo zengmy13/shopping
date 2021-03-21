@@ -1,23 +1,23 @@
 import React, {useEffect} from 'react';
 import {Button, Table, Container, Alert} from "react-bootstrap";
-import Loadingpage from "../loading";
+import LoadingPage from "../loading";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {admingetallorders} from "./store/actioncreators";
 
 
-export default function Orderlist(props) {
+export default function OrderList(props) {
     const dispatch = useDispatch();
-    const {allorders, allordersloading, allorderserror} = useSelector(state => state.allorders);
-    const {currentuser} = useSelector(state => state.login);
+    const {allOrders, allOrdersLoading, allOrdersError} = useSelector(state => state.allOrders);
+    const {currentUser} = useSelector(state => state.login);
 
     useEffect(() => {
-        if (currentuser && currentuser?.isAdmin) {
+        if (currentUser && currentUser?.isAdmin) {
             dispatch(admingetallorders())
         } else {
             props.history.push("/login")
         }
-    }, [dispatch, props.history, currentuser])
+    }, [dispatch, props.history, currentUser])
     return (
         <Container>
             <h4 className='mb-4'>ORDERS</h4>
@@ -35,31 +35,31 @@ export default function Orderlist(props) {
                 </thead>
                 <tbody className='text-center'>
                 {
-                    allordersloading
+                    allOrdersLoading
                         ? <tr>
                             <td colSpan={7}>
-                                <Loadingpage/>
+                                <LoadingPage/>
                             </td>
                         </tr>
-                        : allorderserror ?
+                        : allOrdersError ?
                         <tr>
                             <td colSpan={7}>
-                                <Alert variant='danger'>{allorderserror}</Alert>
+                                <Alert variant='danger'>{allOrdersError}</Alert>
                             </td>
                         </tr>
-                        : allorders.length == 0 ? <tr>
+                        : allOrders.length == 0 ? <tr>
                                 <td colSpan={7}>
                                     NO ORDERS
                                 </td>
                              </tr> :
-                            allorders.map((order, index) => {
+                            allOrders.map((order, index) => {
                                 return <tr key={order._id}>
                                     <td>{order._id}</td>
                                     <td>{order.user?.name}</td>
                                     <td>
                                         {order.createdAt.substr(0, 10)}
                                     </td>
-                                    <td>${order.totalprice
+                                    <td>${order.totalPrice
                                     }</td>
                                     <td>{order.ispaid ? order.paidat.substr(0, 10) :
                                         <i className='fas fa-times' style={{color: "red"}}></i>}</td>

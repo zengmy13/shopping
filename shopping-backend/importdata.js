@@ -1,14 +1,13 @@
-const mongoose = require('mongoose');
 const Product = require("./models/product");
 const products = require('./data/products');
-const connectdb = require('./db/index');
+const connectDB = require('./db/index');
 const User = require("./models/user")
 const users = require("./data/user")
 
 
-connectdb();
+connectDB();
 
-const importdata = async () => {
+const importData = async () => {
 
     try {
         await Product.deleteMany();
@@ -21,5 +20,4 @@ const importdata = async () => {
     }
 }
 
-
-importdata()
+importData()

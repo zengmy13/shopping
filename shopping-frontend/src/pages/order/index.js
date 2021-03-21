@@ -1,26 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Container, Image, ListGroup, Row} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {getorder, updatedeliver, updatepaypal} from "./store/actioncreators";
+import {getorder, updateDeliver, updatePaypal} from "./store/actioncreators";
 import {PayPalButton} from "react-paypal-button-v2";
 import axios from 'axios';
 import {ORDER_RESET} from "./store/actiontype";
-import Loadingpage from "../loading";
+import LoadingPage from "../loading";
 
 export default function Order(props) {
     const dispatch = useDispatch();
     const {id} = props.match.params;
-    const {currentuser} = useSelector(state => state.login)
-    const {orderdetail, paypal, paypalloading, paypalerror, deliversuccess, deliverloading, delivererror} = useSelector(state => state.finalorder);
+    const {currentUser} = useSelector(state => state.login)
+    const {orderDetail, paypal, paypalLoading, paypalError, deliverSuccess, deliverLoading, deliverError} = useSelector(state => state.finalorder);
     const [sdk, setsdk] = useState("false")
 
 
     useEffect(() => {
-        if (!currentuser) {
+        if (!currentUser) {
             props.history.push("/login");
             return;
         }
-        const createpaypal = async () => {
+        const createPaypal = async () => {
             const clientid = await axios.get("/config/pay");
             const script = document.createElement("script");
             script.type = "text/javascript";
@@ -30,59 +30,59 @@ export default function Order(props) {
             }
             document.body.appendChild(script);
         }
-        if (!orderdetail || paypal || orderdetail._id !== id || deliversuccess) {
+        if (!orderDetail || paypal || orderDetail._id !== id || deliverSuccess) {
             dispatch({
                 type: ORDER_RESET
             })
             dispatch(getorder(id))
         } else {
-            if (!orderdetail?.ispaid) {
+            if (!orderDetail?.ispaid) {
                 if (!window.paypal) {
-                    createpaypal()
+                    createPaypal()
                 } else {
                     setsdk(true)
                 }
             }
         }
 
-    }, [dispatch, id, orderdetail, paypal, deliversuccess, currentuser])
-    const handlesuccesspay = (paymentresult) => {
-        dispatch(updatepaypal(id, paymentresult))
+    }, [dispatch, id, orderDetail, paypal, deliverSuccess, currentUser])
+    const handleSuccessPay = (paymentresult) => {
+        dispatch(updatePaypal(id, paymentresult))
     }
-    const handlechangetodeliver = () => {
-        dispatch(updatedeliver(id))
+    const handleChangeToDeliver = () => {
+        dispatch(updateDeliver(id))
     }
     return (
         <Container>
-              <h6>ORDER {orderdetail?._id}</h6>
+              <h6>ORDER {orderDetail?._id}</h6>
             <Row className='my-4'>
                 <Col md={7}>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
                             <h3>SHIPPING</h3>
                             <p>
-                                Name:{orderdetail?.user?.name}
+                                Name:{orderDetail?.user?.name}
                             </p>
                             <p>
-                                Email:{orderdetail?.user?.email}
+                                Email:{orderDetail?.user?.email}
                             </p>
                             <p>
-                                Address:{orderdetail?.shippingaddress.address + ","}
-                                {orderdetail?.shippingaddress.city + ","}
-                                {orderdetail?.shippingaddress.postcode + ","}
-                                {orderdetail?.shippingaddress.country}
+                                Address:{orderDetail?.shippingAddress.address + ","}
+                                {orderDetail?.shippingAddress.city + ","}
+                                {orderDetail?.shippingAddress.postcode + ","}
+                                {orderDetail?.shippingAddress.country}
                             </p>
-                            {orderdetail?.deliver
+                            {orderDetail?.deliver
                                 ?
-                                <Alert variant='success' className='mb-0'>Delivered on {orderdetail?.deliverat}</Alert>
+                                <Alert variant='success' className='mb-0'>Delivered on {orderDetail?.deliverat}</Alert>
                                 : <Alert variant='danger' className='mb-0'>Not Delivered</Alert>
                             }
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <h3>PAYMENT METHOD</h3>
-                            <p>Method: {orderdetail?.paymentmethod}</p>
-                            {orderdetail?.ispaid
-                                ? <Alert variant='success' className='mb-0'>Paid on {orderdetail?.paidat}</Alert>
+                            <p>Method: {orderDetail?.paymentMethod}</p>
+                            {orderDetail?.ispaid
+                                ? <Alert variant='success' className='mb-0'>Paid on {orderDetail?.paidat}</Alert>
                                 : <Alert variant='danger' className='mb-0'>Not Paid</Alert>
                             }
                         </ListGroup.Item>
@@ -90,11 +90,11 @@ export default function Order(props) {
                             <h3>ORDER ITEMS</h3>
                             <ListGroup variant='flush'>
                                 {
-                                    orderdetail?.orderitems.map((item, index) => {
+                                    orderDetail?.orderItems.map((item, index) => {
                                         return <ListGroup.Item>
                                             <Row>
                                                 <Col md={1}>
-                                                    <Image src={item.image} fluid></Image>
+                                                    <Image src={item.image} fluid/>
                                                 </Col>
                                                 <Col md={7}>
                                                     {item.name}
@@ -121,7 +121,7 @@ export default function Order(props) {
                                     Items
                                 </Col>
                                 <Col width={6}>
-                                    ${orderdetail?.itemsprice}
+                                    ${orderDetail?.itemsPrice}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
@@ -131,7 +131,7 @@ export default function Order(props) {
                                     Shipping
                                 </Col>
                                 <Col width={6}>
-                                    ${orderdetail?.shippingprice}
+                                    ${orderDetail?.shippingPrice}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
@@ -141,7 +141,7 @@ export default function Order(props) {
                                     Tax
                                 </Col>
                                 <Col width={6}>
-                                    ${orderdetail?.taxprice}
+                                    ${orderDetail?.taxPrice}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
@@ -151,28 +151,28 @@ export default function Order(props) {
                                     Total
                                 </Col>
                                 <Col width={6}>
-                                    ${orderdetail?.totalprice}
+                                    ${orderDetail?.totalPrice}
                                 </Col>
                             </Row>
                         </ListGroup.Item>
-                        {paypalloading ? <Loadingpage/> : paypalerror ? <Alert variant='danger'>{paypalerror}</Alert> :
-                            !orderdetail?.ispaid &&
+                        {paypalLoading ? <LoadingPage/> : paypalError ? <Alert variant='danger'>{paypalError}</Alert> :
+                            !orderDetail?.ispaid &&
                             <>
                                 <ListGroup.Item>
                                     <PayPalButton className='paypalbuttons'
-                                                  amount={orderdetail?.totalprice}
-                                                  onSuccess={handlesuccesspay}>
+                                                  amount={orderDetail?.totalPrice}
+                                                  onSuccess={handleSuccessPay}>
                                     </PayPalButton>
                                 </ListGroup.Item>
                             </>
                         }
-                        {deliverloading ? <Loadingpage/> : delivererror ?
-                            <Alert variant='danger'>{delivererror}</Alert> :
-                            !orderdetail?.deliver && currentuser?.isAdmin &&
+                        {deliverLoading ? <LoadingPage/> : deliverError ?
+                            <Alert variant='danger'>{deliverError}</Alert> :
+                            !orderDetail?.deliver && currentUser?.isAdmin &&
                             <>
                                 <ListGroup.Item>
                                     <Button type='button' className='btn btn-block' variant='dark' bg='dark'
-                                            onClick={handlechangetodeliver}>
+                                            onClick={handleChangeToDeliver}>
                                         MARK AS DELIVERED
                                     </Button>
                                 </ListGroup.Item>

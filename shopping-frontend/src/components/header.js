@@ -8,7 +8,7 @@ import {Route} from 'react-router-dom'
 
 
 export default function Header() {
-    const {currentuser} = useSelector(state => state.login);
+    const {currentUser} = useSelector(state => state.login);
     const dispatch = useDispatch();
     const handlelogout = () => {
         dispatch(logout())
@@ -32,9 +32,9 @@ export default function Header() {
                             Cart
                         </Nav.Link>
                         {
-                            currentuser ? <NavDropdown title={currentuser.name}>
+                            currentUser ? <NavDropdown title={currentUser.name}>
                                 <NavDropdown.Item as={Link}
-                                                  to={`/profile/${currentuser._id}`}>Profile</NavDropdown.Item>
+                                                  to={`/profile/${currentUser._id}`}>Profile</NavDropdown.Item>
                                 <NavDropdown.Item onClick={handlelogout}>Log out</NavDropdown.Item>
                             </NavDropdown> : <Nav.Link as={Link} to='/login'>
                                 <i className='fas fa-user mr-1'></i>
@@ -42,7 +42,7 @@ export default function Header() {
                             </Nav.Link>
                         }
                         {
-                            currentuser && currentuser?.isAdmin && <NavDropdown title='Admin'>
+                            currentUser && currentUser?.isAdmin && <NavDropdown title='Admin'>
                                 <NavDropdown.Item as={Link} to='/userlist'>Users</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to='/productlist'>Products</NavDropdown.Item>
                                 <NavDropdown.Item as={Link} to='/orderlist'>Orders</NavDropdown.Item>
