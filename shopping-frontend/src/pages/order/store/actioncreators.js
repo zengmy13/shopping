@@ -7,7 +7,7 @@ import {
     ORDER_PAYPAL_SUCCESS
 } from "./actiontype";
 
-export const getorder = (id) => {
+export const getOrder = (id) => {
     return async (dispatch, getState) => {
         try {
             dispatch({

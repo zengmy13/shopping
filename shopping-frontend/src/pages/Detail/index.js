@@ -13,15 +13,15 @@ export default function ProductDetail(props) {
     const {product, productLoading, addReviewSuccess, addReviewLoading, addReviewError, productError} = useSelector(state => state.detail);
     const {currentUser} = useSelector(state => state.login)
     const [qty, setqty] = useState(1);
-    const [rating, setrating] = useState("5");
-    const [comment, setcomment] = useState("");
+    const [rating, setRating] = useState("5");
+    const [comment, setComment] = useState("");
     useEffect(() => {
         dispatch(getProduct(id))
     }, [dispatch, id, props.history, addReviewSuccess])
-    const goback = () => {
+    const goBack = () => {
         props.history.push('/');
     }
-    const handlechooseproduct = (qty) => {
+    const handleChooseProduct = (qty) => {
         props.history.push(`/cart/${id}?qty=${qty}`)
     }
     const handleSubmit = () => {
@@ -33,7 +33,7 @@ export default function ProductDetail(props) {
     }
     return (
         <Container>
-            <Button bd='dark' variant='dark' className='my-4' onClick={goback}>
+            <Button bd='dark' variant='dark' className='my-4' onClick={goBack}>
                 GO BACK
             </Button>
             {
@@ -97,7 +97,7 @@ export default function ProductDetail(props) {
                                     }
                                     <ListGroup.Item>
                                         <Button variant='dark' bg='dark' className='btn-block' type='button'
-                                                onClick={() => handlechooseproduct(qty)}
+                                                onClick={() => handleChooseProduct(qty)}
                                                 disabled={product?.countInStock === 0}>
                                             ADD TO CART
                                         </Button>
@@ -129,7 +129,7 @@ export default function ProductDetail(props) {
                                 {currentUser ? <Form>
                                             <Form.Group>
                                                 <Form.Label>Rating</Form.Label>
-                                                <Form.Control as='select' onChange={(e) => setrating(e.target.value)}>
+                                                <Form.Control as='select' onChange={(e) => setRating(e.target.value)}>
                                                     <option value=''>select...</option>
                                                     <option value='1'>1-Poor</option>
                                                     <option value='2'>2-Fair</option>
@@ -141,7 +141,7 @@ export default function ProductDetail(props) {
                                             <Form.Group>
                                                 <Form.Label>Comment</Form.Label>
                                                 <Form.Control as='textarea' rows={3}
-                                                              onChange={(e) => setcomment(e.target.value)}>
+                                                              onChange={(e) => setComment(e.target.value)}>
                                                 </Form.Control>
                                             </Form.Group>
                                             <Button variant='dark' bg='dark' type='submit'

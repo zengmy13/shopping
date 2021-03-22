@@ -4,7 +4,7 @@ import LoadingPage from "../loading";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getProducts} from "../home/store/actioncreators";
-import {deleteproduct} from "./store/actioncreators";
+import {deleteProduct} from "./store/actioncreators";
 import Paginate from "../../components/paginate";
 
 
@@ -21,9 +21,9 @@ export default function ProductList(props) {
         }
     }, [dispatch, props.history, currentUser, page, deleteSuccess])
 
-    const handledeleteproduct = (id) => {
+    const handleDeleteProduct = (id) => {
         if (window.confirm("Are you sure to delete?")) {
-            dispatch(deleteproduct(id))
+            dispatch(deleteProduct(id))
         }
     }
     const handleCreateProduct = () => {
@@ -36,7 +36,7 @@ export default function ProductList(props) {
                     <h4 className='mb-4' style={{display:"inline-block"}}>PRODUCTS</h4>
                     <Button variant='dark' bg='dark' onClick={handleCreateProduct} className='float-right'>
                         <i className='fas fa-plus mr-2'/>
-                        CREATEPRODUCT
+                        CREATE PRODUCT
                     </Button>
                 </Col>
             </Row>
@@ -64,7 +64,7 @@ export default function ProductList(props) {
                             <td colSpan={6}>
                                 <Alert variant='danger'>{productsError}</Alert>
                             </td>
-                        </tr> : products.length == 0 ? <tr>
+                        </tr> : products.length === 0 ? <tr>
                                 <td colSpan={6}>
                                     NO PRODUCTS
                                 </td>
@@ -88,7 +88,7 @@ export default function ProductList(props) {
                                             <i className='fas fa-edit'/>
                                         </Button>
                                         <Button className='btn btn-light'
-                                                onClick={() => handledeleteproduct(product._id)}>
+                                                onClick={() => handleDeleteProduct(product._id)}>
                                             <i className='fas fa-trash' style={{color: "red"}}/>
                                         </Button>
                                     </td>

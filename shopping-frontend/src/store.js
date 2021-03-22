@@ -5,12 +5,12 @@ import {detailReducer} from "./pages/Detail/store/reducer";
 import {cartReducer} from "./pages/cart/store/reducer";
 import {loginReducer} from "./pages/login/store/reducer";
 import {addressReducer} from "./pages/shipping/store/reducer";
-import {paymentreducer} from "./pages/payment/store/reducer";
+import {paymentReducer} from "./pages/payment/store/reducer";
 import {orderReducer} from "./pages/placeorder/store/reducer";
 import {finalOrderReducer} from "./pages/order/store/reducer";
 import {allUserReducer} from "./pages/userlist/store/reducer";
-import {allproductsreducer} from "./pages/productlist/store/reducer";
-import {allordersreducer} from "./pages/orderlist/store/reducer";
+import {allProductsReducer} from "./pages/productlist/store/reducer";
+import {allOrdersReducer} from "./pages/orderlist/store/reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = combineReducers({
@@ -19,12 +19,12 @@ const reducer = combineReducers({
     cart: cartReducer,
     login: loginReducer,
     address: addressReducer,
-    payment: paymentreducer,
+    payment: paymentReducer,
     order: orderReducer,
-    finalorder: finalOrderReducer,
+    finalOrder: finalOrderReducer,
     allUsers: allUserReducer,
-    allproducts: allproductsreducer,
-    allOrders: allordersreducer
+    allproducts: allProductsReducer,
+    allOrders: allOrdersReducer
 })
 const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 export default store;

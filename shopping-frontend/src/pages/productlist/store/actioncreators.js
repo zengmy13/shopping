@@ -5,7 +5,7 @@ import {
     ADMIN_DELETE_PRODUCT_SUCCESS
 } from "./actiontype";
 
-export const deleteproduct = (id) => {
+export const deleteProduct = (id) => {
     return async (dispatch, getState) => {
         try {
             dispatch({

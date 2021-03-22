@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Container, Image, ListGroup, Row} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {getorder, updateDeliver, updatePaypal} from "./store/actioncreators";
+import {getOrder, updateDeliver, updatePaypal} from "./store/actioncreators";
 import {PayPalButton} from "react-paypal-button-v2";
 import axios from 'axios';
 import {ORDER_RESET} from "./store/actiontype";
@@ -11,7 +11,7 @@ export default function Order(props) {
     const dispatch = useDispatch();
     const {id} = props.match.params;
     const {currentUser} = useSelector(state => state.login)
-    const {orderDetail, paypal, paypalLoading, paypalError, deliverSuccess, deliverLoading, deliverError} = useSelector(state => state.finalorder);
+    const {orderDetail, paypal, paypalLoading, paypalError, deliverSuccess, deliverLoading, deliverError} = useSelector(state => state.finalOrder);
     const [sdk, setsdk] = useState("false")
 
 
@@ -21,10 +21,10 @@ export default function Order(props) {
             return;
         }
         const createPaypal = async () => {
-            const clientid = await axios.get("/config/pay");
+            const clientId = await axios.get("/config/pay");
             const script = document.createElement("script");
             script.type = "text/javascript";
-            script.src = `https://www.paypal.com/sdk/js?client-id=${clientid.data}`;
+            script.src = `https://www.paypal.com/sdk/js?client-id=${clientId.data}`;
             script.onload = function () {
                 setsdk(true)
             }
@@ -34,7 +34,7 @@ export default function Order(props) {
             dispatch({
                 type: ORDER_RESET
             })
-            dispatch(getorder(id))
+            dispatch(getOrder(id))
         } else {
             if (!orderDetail?.ispaid) {
                 if (!window.paypal) {

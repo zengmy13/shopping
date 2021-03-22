@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Checkout from "../../components/checksteps";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
-import {addpaymentmethod} from "./store/actioncreators";
+import {addPaymentMethod} from "./store/actioncreators";
 
 
 export default function Payment(props) {
@@ -18,7 +18,7 @@ export default function Payment(props) {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(addpaymentmethod(paymentMethod));
+        dispatch(addPaymentMethod(paymentMethod));
         props.history.push("/placeorder")
     }
     return (

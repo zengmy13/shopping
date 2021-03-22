@@ -10,7 +10,7 @@ const defaultValue = {
 
 }
 
-export const allordersreducer = (state = defaultValue, action) => {
+export const allOrdersReducer = (state = defaultValue, action) => {
 
     switch (action.type) {
         case ADMIN_GET_ORDERS_REQUEST:

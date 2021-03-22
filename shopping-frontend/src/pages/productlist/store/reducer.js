@@ -8,8 +8,7 @@ const defaultValue = {
 
 }
 
-export const allproductsreducer = (state = defaultValue, action) => {
-
+export const allProductsReducer = (state = defaultValue, action) => {
     switch (action.type) {
 
         case ADMIN_DELETE_PRODUCT_REQUEST:
@@ -29,8 +28,6 @@ export const allproductsreducer = (state = defaultValue, action) => {
                 deleteLoading: false,
                 deleteError: action.error,
             }
-
-
     }
     return state;
 }

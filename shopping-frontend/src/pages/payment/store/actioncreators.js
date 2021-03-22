@@ -1,6 +1,6 @@
 import {ADD_PAYMENT_METHOD} from "./actiontypes";
 
-export const addpaymentmethod = (payment) => {
+export const addPaymentMethod = (payment) => {
     return (dispatch) => {
         dispatch({
             type: ADD_PAYMENT_METHOD,

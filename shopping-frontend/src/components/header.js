@@ -3,14 +3,14 @@ import {Navbar, Nav, Container, NavDropdown} from "react-bootstrap";
 import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../pages/login/store/actioncreators";
-import Searchbox from "./searchbox";
+import SearchBox from "./searchbox";
 import {Route} from 'react-router-dom'
 
 
 export default function Header() {
     const {currentUser} = useSelector(state => state.login);
     const dispatch = useDispatch();
-    const handlelogout = () => {
+    const handleLogout = () => {
         dispatch(logout())
     }
     return (
@@ -21,7 +21,7 @@ export default function Header() {
                 </Navbar.Brand>
                 <Navbar>
                     <Route render={({history}) => {
-                        return <Searchbox history={history}/>
+                        return <SearchBox history={history}/>
                     }}/>
                 </Navbar>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"></Navbar.Toggle>
@@ -35,7 +35,7 @@ export default function Header() {
                             currentUser ? <NavDropdown title={currentUser.name}>
                                 <NavDropdown.Item as={Link}
                                                   to={`/profile/${currentUser._id}`}>Profile</NavDropdown.Item>
-                                <NavDropdown.Item onClick={handlelogout}>Log out</NavDropdown.Item>
+                                <NavDropdown.Item onClick={handleLogout}>Log out</NavDropdown.Item>
                             </NavDropdown> : <Nav.Link as={Link} to='/login'>
                                 <i className='fas fa-user mr-1'></i>
                                 Sign In

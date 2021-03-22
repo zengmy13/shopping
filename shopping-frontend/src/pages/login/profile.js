@@ -32,7 +32,7 @@ export default function Profile(props) {
     }, [dispatch, id, profile, currentUser])
 
 
-    const handleUdate = (e) => {
+    const handleUpdate = (e) => {
         e.preventDefault()
         if (confirmPassword !== password) {
             setMessage("password do not match")
@@ -88,7 +88,7 @@ export default function Profile(props) {
                         </Form.Group>
                         <Form.Group>
                             <Button type='submit' variant='dark'
-                                    onClick={(e) => handleUdate(e)}>
+                                    onClick={(e) => handleUpdate(e)}>
                                 UPDATE
                             </Button>
                         </Form.Group>

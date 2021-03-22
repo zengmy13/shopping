@@ -5,7 +5,7 @@ const defaultValue = {
     paymentMethod:
         window.localStorage.getItem("payment") ? JSON.parse(window.localStorage.getItem("payment")) : null
 }
-export const paymentreducer = (state = defaultValue, action) => {
+export const paymentReducer = (state = defaultValue, action) => {
     switch (action.type) {
         case ADD_PAYMENT_METHOD:
             return {

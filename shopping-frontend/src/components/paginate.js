@@ -6,7 +6,7 @@ import {useHistory} from 'react-router-dom';
 export default function Paginate(props) {
     const {totalPage, page, keyword, admin = false} = props;
     const history = useHistory()
-    const handleclick = (num) => {
+    const handleClick = (num) => {
         if (keyword) {
             history.push(`/search/${keyword}/page/${num}`)
         } else {
@@ -22,7 +22,7 @@ export default function Paginate(props) {
             {
                 [...Array(totalPage).keys()].map((number, index) => {
                     return <Pagination.Item key={number + 1} active={number + 1 === page}
-                                            onClick={() => handleclick(number + 1)}>
+                                            onClick={() => handleClick(number + 1)}>
                         {number + 1}
                     </Pagination.Item>
                 })

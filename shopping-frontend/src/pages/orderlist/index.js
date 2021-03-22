@@ -3,7 +3,7 @@ import {Button, Table, Container, Alert} from "react-bootstrap";
 import LoadingPage from "../loading";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {admingetallorders} from "./store/actioncreators";
+import {adminGetAllOrders} from "./store/actioncreators";
 
 
 export default function OrderList(props) {
@@ -13,7 +13,7 @@ export default function OrderList(props) {
 
     useEffect(() => {
         if (currentUser && currentUser?.isAdmin) {
-            dispatch(admingetallorders())
+            dispatch(adminGetAllOrders())
         } else {
             props.history.push("/login")
         }

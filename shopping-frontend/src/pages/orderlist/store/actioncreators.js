@@ -1,7 +1,7 @@
 import axios from "axios";
 import {ADMIN_GET_ORDERS_FAIL, ADMIN_GET_ORDERS_REQUEST, ADMIN_GET_ORDERS_SUCCESS} from "./actiontype";
 
-export const admingetallorders = () => {
+export const adminGetAllOrders = () => {
     return async (dispatch, getState) => {
         try {
             dispatch({

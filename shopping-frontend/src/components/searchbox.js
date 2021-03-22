@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Form, Button} from "react-bootstrap";
 
 
-export default function Searchbox(props) {
-    const [keyword, setkeyword] = useState("");
+export default function SearchBox(props) {
+    const [keyword, setKeyword] = useState("");
     const handleSubmit = (e) => {
         e.preventDefault()
         if (keyword.trim()) {
@@ -16,7 +16,7 @@ export default function Searchbox(props) {
         <Form inline className='searchbox'>
             <Form.Group>
                 <Form.Control type='text' placeholder='Search products'
-                              onChange={(e) => setkeyword(e.target.value)}>
+                              onChange={(e) => setKeyword(e.target.value)}>
                 </Form.Control>
             </Form.Group>
             <Form.Group className='ml-2'>

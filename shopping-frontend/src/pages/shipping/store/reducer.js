@@ -1,9 +1,9 @@
 import {SAVE_ADDRESS} from "./actiontype";
 
 
-const getAhippingAddressFromLocal = window.localStorage.getItem("address") ? JSON.parse(window.localStorage.getItem("address")) : null
+const getShippingAddressFromLocal = window.localStorage.getItem("address") ? JSON.parse(window.localStorage.getItem("address")) : null
 const defaultValue = {
-    shippingAddress: getAhippingAddressFromLocal
+    shippingAddress: getShippingAddressFromLocal
 }
 export const addressReducer = (state = defaultValue, action) => {
     switch (action.type) {

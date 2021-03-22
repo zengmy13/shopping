@@ -11,7 +11,7 @@ export default function UserEdit(props) {
     const {id} = props.match.params;
     const [email, setEmail] = useState("")
     const [name, setName] = useState("")
-    const [isadmin, setisadmin] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
     const {currentUser} = useSelector(state => state.login)
     const dispatch = useDispatch();
     const {user, updateLoading, updateError, updateSuccess} = useSelector(state => state.allUsers)
@@ -27,12 +27,12 @@ export default function UserEdit(props) {
             })
             props.history.push("/userlist");
         }
-        if (!user || user._id != id) {
+        if (!user || user._id !== id) {
             dispatch(adminGetUserDetail(id))
         } else {
             setName(user.name);
             setEmail(user.email);
-            setisadmin(user.isAdmin)
+            setIsAdmin(user.isAdmin)
         }
     }, [dispatch, id, user, currentUser])
     const handleSubmitForm = (e) => {
@@ -40,7 +40,7 @@ export default function UserEdit(props) {
         const update = {
             name: name,
             email: email,
-            isAdmin: isadmin
+            isAdmin: isAdmin
         }
         dispatch(adminUpdateUser(id, update))
     }
@@ -74,9 +74,9 @@ export default function UserEdit(props) {
                                     <Form.Group>
                                         <Form.Check
                                             label='Is Admin'
-                                            checked={isadmin}
+                                            checked={isAdmin}
                                             type='checkbox'
-                                            onChange={(e) => setisadmin(e.target.checked)}>
+                                            onChange={(e) => setIsAdmin(e.target.checked)}>
                                         </Form.Check>
                                     </Form.Group>
                                     <Form.Group>

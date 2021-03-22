@@ -68,7 +68,7 @@ export default function Shipping(props) {
                     <Form.Group>
                         <Button type='submit' variant='dark'
                                 onClick={(e) => handleSubmitForm(e)}>
-                            COUNTINUE
+                            CONTINUE
                         </Button>
                     </Form.Group>
                 </Col>

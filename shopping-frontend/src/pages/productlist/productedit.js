@@ -21,7 +21,7 @@ export default function ProductEdit(props) {
     const dispatch = useDispatch();
     const {product, updateSuccess} = useSelector(state => state.detail)
     const {createSuccess} = useSelector(state => state.home)
-    const [uploading, setuploading] = useState(false);
+    const [uploading, setUploading] = useState(false);
     const {currentUser} = useSelector(state => state.login)
     useEffect(() => {
         if (!id) {
@@ -57,19 +57,19 @@ export default function ProductEdit(props) {
     const uploadFile = async (e) => {
         try {
             const file = e.target.files[0];
-            const formdata = new FormData();
-            formdata.append('image', file);
-            setuploading(true)
+            const formData = new FormData();
+            formData.append('image', file);
+            setUploading(true)
             const config = {
                 headers: {
                     "Content-Type": "application/json",
                 }
             }
-            await axios.post("/api/upload", formdata, config)
+            await axios.post("/api/upload", formData, config)
             setImage(file.name);
-            setuploading(false)
+            setUploading(false)
         } catch (error) {
-            setuploading(false)
+            setUploading(false)
         }
     }
 
@@ -120,7 +120,7 @@ export default function ProductEdit(props) {
                                               type='text'
                                               onChange={(e) => setImage(e.target.value)}>
                                 </Form.Control>
-                                <Form.File id="imagefile" label="Choose file" custom onChange={(e) => uploadFile(e)}/>
+                                <Form.File id="imageFile" label="Choose file" custom onChange={(e) => uploadFile(e)}/>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Brand</Form.Label>
