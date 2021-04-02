@@ -7,7 +7,7 @@ import {
     ADMIN_UPDATE_PRODUCT_SUCCESS,
     GET_PRODUCT_FAIL,
     GET_PRODUCT_REQUEST,
-    GET_PRODUCT_SUCCESS
+    GET_PRODUCT_SUCCESS, RESET_REVIEW
 } from "./actiontype";
 
 const defaultValue = {
@@ -81,6 +81,14 @@ export const detailReducer = (state = defaultValue, action) => {
                 addReviewLoading: false,
                 addReviewError: action.error
             }
+        case RESET_REVIEW:{
+            return {
+                ...state,
+                addReviewSuccess: false,
+                addReviewError: null
+
+            }
+        }
     }
     return state;
 }
