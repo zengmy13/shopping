@@ -27,6 +27,18 @@ export default function Register(props) {
 
     const handleSubmitForm = (e) => {
         e.preventDefault()
+        if(name===""){
+            setMessage("name is required")
+            return;
+        }
+        if(password===""){
+            setMessage("password is required")
+            return;
+        }
+        if(email===""){
+            setMessage("email is required")
+            return;
+        }
         if (password !== confirmPassword) {
             setMessage("password do not match")
             return;
@@ -84,6 +96,7 @@ export default function Register(props) {
                             </Form.Group>
                             <Form.Group>
                                 <Button type='submit' variant='dark'
+                                        disabled={name=="" | password=="" | confirmPassword=="" | email===""}
                                         onClick={(e) => handleSubmitForm(e)}>
                                     REGISTER
                                 </Button>
