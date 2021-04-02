@@ -5,6 +5,7 @@ import {Col, Row, Button, ListGroup, Container, Image, Form, Alert} from 'react-
 import Rating from "../../components/rating";
 import LoadingPage from "../loading";
 import {Link} from 'react-router-dom';
+import {RESET_REVIEW} from "./store/actiontype";
 
 
 export default function ProductDetail(props) {
@@ -16,20 +17,33 @@ export default function ProductDetail(props) {
     const [rating, setRating] = useState("5");
     const [comment, setComment] = useState("");
     useEffect(() => {
+        dispatch({
+            type:RESET_REVIEW
+        })
+        if(addReviewSuccess){
+            alert("Review added");
+            setRating("5");
+            setComment("");
+            dispatch({
+                type:RESET_REVIEW
+            })
+        }
         dispatch(getProduct(id))
-    }, [dispatch, id, props.history, addReviewSuccess])
+    }, [dispatch,id,addReviewSuccess])
     const goBack = () => {
         props.history.push('/');
     }
     const handleChooseProduct = (qty) => {
         props.history.push(`/cart/${id}?qty=${qty}`)
     }
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         const create = {
             rating: rating,
             comment: comment
         }
-        dispatch(addNewReviews(id, create))
+        dispatch(addNewReviews(id, create));
+
     }
     return (
         <Container>
