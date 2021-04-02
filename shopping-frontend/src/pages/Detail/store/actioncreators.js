@@ -56,6 +56,7 @@ export const adminChangeProduct = (id, update) => {
 
 
 export const addNewReviews = (id, create) => {
+
     return async (dispatch, getState) => {
         try {
             dispatch({
@@ -67,7 +68,8 @@ export const addNewReviews = (id, create) => {
                     Authorization: `Bearer ${getState().login.currentUser.token}`
                 }
             }
-            await axios.post(`/api/product/${id}/review`, create, config);
+             const result=await axios.post(`/api/product/${id}/review`, create, config);
+             console.log(result.data)
             dispatch({
                 type: ADD_REVIEWS_SUCCESS,
             })
