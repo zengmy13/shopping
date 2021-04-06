@@ -27,6 +27,9 @@ export default function PlaceOrder(props) {
             productId: item._id
         }
     })
+    if(shippingAddress===""){
+        props.history.push("/shipping")
+    }
     if (!currentUser) {
         props.history.push("/login")
     }

@@ -4,7 +4,7 @@ import {Row, Col, Container} from 'react-bootstrap'
 
 export default function Footer() {
     return (
-        <Container>
+        <Container >
             <Row>
                 <Col className='text-center'>
                     Copyright&copy;Project2

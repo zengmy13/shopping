@@ -67,6 +67,7 @@ export default function Shipping(props) {
                     </Form.Group>
                     <Form.Group>
                         <Button type='submit' variant='dark'
+                                disabled={address==="" | city==="" |postcode==="" | country===""}
                                 onClick={(e) => handleSubmitForm(e)}>
                             CONTINUE
                         </Button>
